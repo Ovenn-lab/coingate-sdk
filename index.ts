@@ -1,3 +1,5 @@
-import { Client } from "./Clients";
+import { PublicService } from "./Modules/Public/Public.service";
 
-console.log(Client.VERSION);
+const app = new PublicService();
+
+app.getExchangeRate({ from: "EUR", to: "EUR" });
