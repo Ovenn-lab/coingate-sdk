@@ -1,12 +1,23 @@
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+
 class CoinGateClient {
   static VERSION = "4.1.0";
-  protected coinGateUrl: "https://coingate.lt";
+
+  protected coinGateUrl: "https://api.coingate.com/v2/";
+
+  private client: AxiosInstance;
 
   constructor() {
-    //   CREATE AXIOS CLIENT WITH URL AND ETC.
+    this.client = axios.create({
+      baseURL: this.coinGateUrl,
+    });
   }
 
   sendPostRequest(apiKey: string, path: string, params: object) {
-    //   this.axios.post(...);
+    // this.client.post();
+  }
+
+  sendGetRequest(apiKey: string, path: string, params: object) {
+    // this.client.get()
   }
 }
