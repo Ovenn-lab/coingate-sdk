@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { getRequestData, RequestEnum } from "../../Services/types";
+import { getRequestData, RequestEnum } from "./types";
 
 export class CoinGateClient {
   static VERSION = "4.1.0";
