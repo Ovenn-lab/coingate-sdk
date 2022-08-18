@@ -1,16 +1,17 @@
+import { PublicClient } from "./Modules/Public/Public.client";
+
 class Client {
-  protected orders: OrderClient = new OrderClient();
-  protected payments: PaymentsClient = new PaymentClient();
+  protected publicClient: PublicClient = new PublicClient();
+  // protected paymentGateway: PaymentGatewayClient = new PaymentGatewayClient();
 
   constructor(protected apiKey: string | null) {
     this.setApiKey(apiKey);
   }
 
   setApiKey(apiKey) {
-    this.orders = this.orders.setApiKey(apiKey);
-    this.payments = this.payments.setApiKey(apiKey);
+    // this.paymentGateway = this.paymentGateway.setApiKey(apiKey)
     // Su visais kitais clientais tas pats
   }
 }
 
-export { Client, OrderClient, PaymentsClient };
+export { Client, PublicClient };

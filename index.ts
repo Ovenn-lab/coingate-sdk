@@ -1,6 +1,6 @@
-import { PublicService } from "./Modules/Public/Public.service";
+import { PublicClient } from "./Modules/Public/Public.client";
 
-const app = new PublicService();
+const app = new PublicClient();
 
 app.getExchangeRate({ from: "EUR", to: "EUR" });
 // app.getCurrencies({

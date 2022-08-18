@@ -1,8 +1,8 @@
-import { CoinGateClient } from "../Client/CoinGateClient";
-import { AbstractService } from "../Order/Abstract/Abstract.service";
+import { CoinGateClient } from "../Client/CoinGate.client";
+import { AbstractService } from "../Abstract/Abstract.service";
 import { getCurrenciesData, getExchangeRateData } from "./types";
 
-export class PublicService {
+export class PublicClient {
   private client: CoinGateClient;
 
   private abstractService: AbstractService;
