@@ -1,8 +1,8 @@
-import { PublicClient } from "./Modules/Public/Public.client";
+import { Client, PublicClient } from "./Clients";
 
-const app = new PublicClient();
+const client = new Client("wazzup");
 
-app.getExchangeRate({ from: "EUR", to: "EUR" });
+// app.getExchangeRate({ from: "EUR", to: "EUR" });
 // app.getCurrencies({
 //   native: true,
 //   enabled: true,

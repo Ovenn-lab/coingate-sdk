@@ -2,13 +2,11 @@ import { CoinGateClient } from "../Client/CoinGate.client";
 import { AbstractService } from "../Abstract/Abstract.service";
 import { getCurrenciesData, getExchangeRateData } from "./types";
 
-export class PublicClient {
-  private client: CoinGateClient;
-
+export class PublicClient extends CoinGateClient {
   private abstractService: AbstractService;
 
   constructor() {
-    this.client = new CoinGateClient();
+    super();
     this.abstractService = new AbstractService();
   }
 
@@ -20,33 +18,33 @@ export class PublicClient {
       pathEnd: ":from/:to",
       params: options,
     });
-    return await this.client.sendGetRequest({ path });
+    return await this.sendGetRequest({ path });
   }
 
   public listExchangeRates() {
-    return this.client.sendGetRequest({ path: "rates/" });
+    return this.sendGetRequest({ path: "rates/" });
   }
 
   public ping() {
-    return this.client.sendGetRequest({ path: "ping/" });
+    return this.sendGetRequest({ path: "ping/" });
   }
 
   public ipAddresses(separator?: string) {
-    return this.client.sendGetRequest({
+    return this.sendGetRequest({
       path: "ips-v4/",
       params: { separator },
     });
   }
 
   public async getCurrencies(params: getCurrenciesData) {
-    return this.client.sendGetRequest({
+    return this.sendGetRequest({
       params,
       path: "currencies/",
     });
   }
 
   public async platforms(enabled?: "true" | "false") {
-    return this.client.sendGetRequest({
+    return this.sendGetRequest({
       path: "currencies/",
       params: { enabled },
     });

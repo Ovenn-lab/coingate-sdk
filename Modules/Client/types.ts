@@ -4,7 +4,6 @@ export enum RequestEnum {
 }
 
 export type getRequestData = {
-  apiKey?: string;
   path: string;
   params?: object;
 };

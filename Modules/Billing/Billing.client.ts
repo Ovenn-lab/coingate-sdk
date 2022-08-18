@@ -1,7 +1,13 @@
 import { AbstractService } from "../Abstract/Abstract.service";
+import { CoinGateClient } from "../Client/CoinGate.client";
 
-export class BillingClient {
+export class BillingClient extends CoinGateClient {
   private abstractService: AbstractService;
+
+  constructor() {
+    super();
+    this.abstractService = new AbstractService();
+  }
 
   public createSubscriber() {
     // POST

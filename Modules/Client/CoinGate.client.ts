@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
 import { getRequestData, RequestEnum } from "./types";
 
 export class CoinGateClient {
@@ -8,22 +8,28 @@ export class CoinGateClient {
 
   private client: AxiosInstance;
 
+  protected apiKey: string | null;
+
   constructor() {
     this.client = axios.create({
       baseURL: this.coinGateUrl,
     });
+    this.apiKey = null;
   }
 
-  public sendPostRequest(
-    apiKey: string,
-    path: string,
-    body: object,
-    params?: object
-  ) {
+  public co(krcTest: string) {
+    console.log(this.apiKey, krcTest);
+  }
+
+  public setApiKey(apiKey: string | null) {
+    this.apiKey = apiKey;
+  }
+
+  public sendPostRequest(path: string, body: object, params?: object) {
     this.client.post(path);
   }
 
-  public async sendGetRequest({ apiKey, path, params }: getRequestData) {
+  public async sendGetRequest({ path, params }: getRequestData) {
     const { data } = await this.client.get(path, { params });
 
     return data;
