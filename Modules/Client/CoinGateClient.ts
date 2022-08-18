@@ -24,7 +24,7 @@ export class CoinGateClient {
   }
 
   public async sendGetRequest({ apiKey, path, params }: getRequestData) {
-    const { data } = await this.client.get(path);
+    const { data } = await this.client.get(path, { params });
 
     return data;
   }

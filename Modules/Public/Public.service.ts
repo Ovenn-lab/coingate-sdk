@@ -1,10 +1,8 @@
 import { CoinGateClient } from "../Client/CoinGateClient";
 import { AbstractService } from "../Order/Abstract/Abstract.service";
-import { getExchangeRateData } from "./types";
+import { getCurrenciesData, getExchangeRateData } from "./types";
 
 export class PublicService {
-  private path = "rates/";
-
   private client: CoinGateClient;
 
   private abstractService: AbstractService;
@@ -14,15 +12,49 @@ export class PublicService {
     this.abstractService = new AbstractService();
   }
 
-  // reikia enuma apsirasyt valiutom, USD, EUR, ETH etc.. kurios gali buti
+  // TODO:  reikia enuma arba kazka apsirasyt valiutom, USD, EUR, ETH etc.. kurios gali buti
   // kad neeitu paduoti random stringu per kuriuos susigadina req
   public async getExchangeRate(options?: { from: string; to: string }) {
     const path = this.abstractService.buildPath(
-      this.path + "merchant/",
+      "rates/merchant/",
       ":from/:to",
       options
     );
     const data = await this.client.sendGetRequest({ path });
+    return data;
+  }
+
+  public async listExchangeRates() {
+    const data = await this.client.sendGetRequest({ path: "rates/" });
+    console.log(data);
+  }
+
+  public async ping() {
+    const data = await this.client.sendGetRequest({ path: "ping/" });
+    console.log(data);
+  }
+
+  public async ipAddresses(separator?: string) {
+    const data = await this.client.sendGetRequest({
+      path: "ips-v4/",
+      params: { separator },
+    });
+    console.log(data);
+  }
+
+  public async getCurrencies(params: getCurrenciesData) {
+    const data = await this.client.sendGetRequest({
+      params,
+      path: "currencies/",
+    });
+    console.log(data);
+  }
+
+  public async platforms(enabled?: "true" | "false") {
+    const data = await this.client.sendGetRequest({
+      path: "currencies/",
+      params: { enabled },
+    });
     console.log(data);
   }
 }
