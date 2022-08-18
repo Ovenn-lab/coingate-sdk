@@ -2,7 +2,7 @@ import { PublicService } from "./Modules/Public/Public.service";
 
 const app = new PublicService();
 
-// app.getExchangeRate({ from: "EUR", to: "EUR" });
+app.getExchangeRate({ from: "EUR", to: "EUR" });
 // app.getCurrencies({
 //   native: true,
 //   enabled: true,
@@ -10,4 +10,4 @@ const app = new PublicService();
 //   merchant_receive: true,
 //   kind: "crypto",
 // });
-app.platforms();
+// app.platforms();

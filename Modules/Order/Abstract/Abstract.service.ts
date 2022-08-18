@@ -1,8 +1,8 @@
-import { AxiosInstance } from "axios";
-import { CoinGateClient } from "../../Client/CoinGateClient";
-
+import { BuildPathInput } from "./types";
 export class AbstractService {
-  public buildPath(path: string, pathEnd: string, params?: object) {
+  // Reiks refactor poto sita methoda
+
+  public buildPath({ path, pathEnd, params }: BuildPathInput) {
     if (!params) {
       return path;
     }

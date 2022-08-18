@@ -15,46 +15,40 @@ export class PublicService {
   // TODO:  reikia enuma arba kazka apsirasyt valiutom, USD, EUR, ETH etc.. kurios gali buti
   // kad neeitu paduoti random stringu per kuriuos susigadina req
   public async getExchangeRate(options?: { from: string; to: string }) {
-    const path = this.abstractService.buildPath(
-      "rates/merchant/",
-      ":from/:to",
-      options
-    );
-    const data = await this.client.sendGetRequest({ path });
-    return data;
+    const path = this.abstractService.buildPath({
+      path: "rates/merchant/",
+      pathEnd: ":from/:to",
+      params: options,
+    });
+    return await this.client.sendGetRequest({ path });
   }
 
-  public async listExchangeRates() {
-    const data = await this.client.sendGetRequest({ path: "rates/" });
-    console.log(data);
+  public listExchangeRates() {
+    return this.client.sendGetRequest({ path: "rates/" });
   }
 
-  public async ping() {
-    const data = await this.client.sendGetRequest({ path: "ping/" });
-    console.log(data);
+  public ping() {
+    return this.client.sendGetRequest({ path: "ping/" });
   }
 
-  public async ipAddresses(separator?: string) {
-    const data = await this.client.sendGetRequest({
+  public ipAddresses(separator?: string) {
+    return this.client.sendGetRequest({
       path: "ips-v4/",
       params: { separator },
     });
-    console.log(data);
   }
 
   public async getCurrencies(params: getCurrenciesData) {
-    const data = await this.client.sendGetRequest({
+    return this.client.sendGetRequest({
       params,
       path: "currencies/",
     });
-    console.log(data);
   }
 
   public async platforms(enabled?: "true" | "false") {
-    const data = await this.client.sendGetRequest({
+    return this.client.sendGetRequest({
       path: "currencies/",
       params: { enabled },
     });
-    console.log(data);
   }
 }
