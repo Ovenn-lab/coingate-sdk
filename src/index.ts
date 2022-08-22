@@ -1,6 +1,32 @@
-import { Client, PublicClient } from "./Clients";
+import { Client } from "./Clients";
 
-const client = new Client("wazzup");
+const client = new Client("Bearer P_gkiNVtFZkNy1kCekx6fdwsfCT-dWL21tsxrHh_");
+
+client.paymentGateway.checkout(32800, { pay_currency: "ETH" });
+// client.paymentGateway.listOrders();
+
+// client.paymentGateway.getOrder(32810);
+
+// client.refunds.createOrderRefund(32820, {
+//   amount: 50,
+//   address: "2MxRdYGDdyFiqkMUUksTJ3Qey8sTQPfTii9",
+//   currency_id: 1,
+//   platform_id: 2,
+//   reason: "for test purposes",
+//   email: "testDrive@gmail.com",
+//   ledger_account_id: "random",
+// });
+
+const test = async () => {
+  const test = await client.paymentGateway.listOrders();
+  console.log(test);
+};
+// test();
+// client.paymentGateway.createOrder({
+//   price_amount: 150.5,
+//   price_currency: "EUR",
+//   receive_currency: "GBP",
+// });
 
 // app.getExchangeRate({ from: "EUR", to: "EUR" });
 // app.getCurrencies({

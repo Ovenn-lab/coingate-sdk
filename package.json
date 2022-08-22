@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/Ovenn-lab/coingate-sdk#readme",
   "dependencies": {
-    "axios": "^0.27.2",
-    "ts-node": "^10.9.1"
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "eslint": "^8.22.0",
+    "prettier": "^2.7.1"
   }
 }

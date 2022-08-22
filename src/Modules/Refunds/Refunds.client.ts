@@ -1,31 +1,37 @@
-import { AbstractService } from "../Abstract/Abstract.service";
-import { CoinGateClient } from "../Client/CoinGate.client";
+import { CoinGateClient } from "../../Client/CoinGate.client";
+import { CreateOrderRefundBody } from "./types";
 
 export class RefundsClient extends CoinGateClient {
-  private abstractService: AbstractService;
-
   constructor() {
     super();
-    this.abstractService = new AbstractService();
   }
 
-  public createOrderRefund() {
-    // POST
-    // orders/:order_id/refunds
+  public createOrderRefund(order_id: number, body: CreateOrderRefundBody) {
+    const path = this.buildPath({
+      path: "orders/:order_id/refunds",
+      params: { order_id },
+    });
+    return this.sendPostRequest(path, body);
   }
 
-  public getOrderRefund() {
-    // GET
-    // orders/:order_id/refunds/:id
+  public getOrderRefund(order_id: number, id: number) {
+    const path = this.buildPath({
+      path: "orders/:order_id/refunds/:id",
+      params: { order_id, id },
+    });
+    return this.sendGetRequest(path);
   }
 
-  public getOrderRefunds() {
-    // GET
-    // orders/:order_id/refunds
+  public getOrderRefunds(order_id: number) {
+    const path = this.buildPath({
+      path: "orders/:order_id/refunds",
+      params: { order_id },
+    });
+    console.log(path);
+    return this.sendGetRequest(path);
   }
 
   public getRefunds() {
-    // GET
-    // refunds
+    return this.sendGetRequest("refunds");
   }
 }

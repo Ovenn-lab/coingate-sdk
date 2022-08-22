@@ -1,52 +1,37 @@
-import { CoinGateClient } from "../Client/CoinGate.client";
-import { AbstractService } from "../Abstract/Abstract.service";
+import { CoinGateClient } from "../../Client/CoinGate.client";
 import { getCurrenciesData, getExchangeRateData } from "./types";
 
 export class PublicClient extends CoinGateClient {
-  private abstractService: AbstractService;
-
   constructor() {
     super();
-    this.abstractService = new AbstractService();
   }
 
-  // TODO:  reikia enuma arba kazka apsirasyt valiutom, USD, EUR, ETH etc.. kurios gali buti
-  // kad neeitu paduoti random stringu per kuriuos susigadina req
   public async getExchangeRate(options?: { from: string; to: string }) {
-    const path = this.abstractService.buildPath({
+    const path = this.buildPath({
       path: "rates/merchant/",
       pathEnd: ":from/:to",
       params: options,
     });
-    return await this.sendGetRequest({ path });
+    return await this.sendGetRequest(path);
   }
 
   public listExchangeRates() {
-    return this.sendGetRequest({ path: "rates/" });
+    return this.sendGetRequest("rates/");
   }
 
   public ping() {
-    return this.sendGetRequest({ path: "ping/" });
+    return this.sendGetRequest("ping/");
   }
 
   public ipAddresses(separator?: string) {
-    return this.sendGetRequest({
-      path: "ips-v4/",
-      params: { separator },
-    });
+    return this.sendGetRequest("ips-v4/", { separator });
   }
 
   public async getCurrencies(params: getCurrenciesData) {
-    return this.sendGetRequest({
-      params,
-      path: "currencies/",
-    });
+    return this.sendGetRequest("currencies/", params);
   }
 
   public async platforms(enabled?: "true" | "false") {
-    return this.sendGetRequest({
-      path: "currencies/",
-      params: { enabled },
-    });
+    return this.sendGetRequest("currencies/", { enabled });
   }
 }
