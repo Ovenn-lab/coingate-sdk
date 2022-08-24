@@ -7,26 +7,26 @@ export class PaymentGatewayClient extends CoinGateClient {
   }
 
   public async createOrder(body: CreateOrderBody) {
-    return this.sendPostRequest("v2/orders/", body);
+    return this.post("/v2/orders/", body);
   }
 
   public checkout(id: number, body: CheckoutBody) {
     const path = this.buildPath({
-      path: "v2/orders/:id/checkout",
+      path: "/v2/orders/:id/checkout",
       params: { id },
     });
-    return this.sendPostRequest(path, body);
+    return this.post(path, body);
   }
 
   public getOrder(id: number) {
     const path = this.buildPath({
-      path: "v2/orders/:id/",
+      path: "/v2/orders/:id/",
       params: { id },
     });
-    return this.sendGetRequest(path);
+    return this.get({ path });
   }
 
   public async listOrders(params?: ListOrdersData) {
-    return this.sendGetRequest("v2/orders/", params);
+    return this.get({ path: "/v2/orders/", params });
   }
 }

@@ -7,7 +7,7 @@ export type ListOrdersData = {
 };
 
 export type CreateOrderBody = {
-  order_id?: string; // Merchant's custom order ID.
+  order_id?: string;
   price_amount: number;
   price_currency: string;
   receive_currency: string;

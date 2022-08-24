@@ -1,7 +1,14 @@
 import { AxiosError, AxiosResponse } from "axios";
 
-export const apiErrorException = (error: AxiosError) => {
-  const { response } = error;
-  const { data, status } = response as AxiosResponse;
-  throw { status, reason: data.reason, errors: data.errors || [] };
-};
+export class ApiErrorException {
+  constructor(private error: AxiosError) {
+    this.error = error;
+    this.logError();
+  }
+
+  logError() {
+    const { response } = this.error;
+    const { data, status } = response as AxiosResponse;
+    console.log({ status, reason: data.reason, errors: data.errors || [] });
+  }
+}

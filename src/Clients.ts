@@ -12,27 +12,56 @@ export class Client {
 
   public refunds: RefundsClient;
 
-  constructor(protected apiKey: string | null, protected sandbox?: boolean) {
-    const baseUrl = sandbox
+  private clients: [PublicClient, PaymentGatewayClient, RefundsClient];
+
+  constructor(
+    protected apiKey: string | null,
+    protected useSandboxEnv?: boolean
+  ) {
+    const baseUrl = useSandboxEnv
       ? this.SANDBOX_DEFAULT_API_BASE
       : this.DEFAULT_API_BASE;
-
     this.validateApiKey(apiKey);
     this.public = new PublicClient(baseUrl);
     this.refunds = new RefundsClient(baseUrl);
     this.paymentGateway = new PaymentGatewayClient(baseUrl);
-    this.setApiKey(apiKey);
+    this.clients = [this.public, this.paymentGateway, this.refunds];
+    this.setApiKey(`Bearer ${apiKey}`);
   }
-  // masyva padaryt kad per visus eitu ir greit sudetu | BET AR REIKIA KAI DU LIKO?????
+
   setApiKey(apiKey: string | null) {
-    this.paymentGateway.setApiKey(apiKey);
-    this.refunds.setApiKey(apiKey);
+    this.clients.forEach((client) => client.setApiKey(apiKey));
+  }
+
+  setEnviroment(enviroment: "live" | "sandbox") {
+    if (enviroment === "sandbox") {
+      this.clients.forEach((client) =>
+        client.setClientEnviroment(this.SANDBOX_DEFAULT_API_BASE)
+      );
+    }
+    if (enviroment === "live") {
+      this.clients.forEach((client) =>
+        client.setClientEnviroment(this.DEFAULT_API_BASE)
+      );
+    }
+  }
+
+  testConnection(apiKey: string) {
+    return this.public.test(apiKey);
   }
 
   private validateApiKey(apiKey: string | null) {
     if (apiKey !== null) {
       if (typeof apiKey !== "string") {
-        throw new Error("ff");
+        throw new Error("Api key must be null or a string");
+      }
+
+      if (apiKey.length === 0) {
+        throw new Error("Api key cannot be empty string");
+      }
+
+      if (/\s/.test(apiKey)) {
+        throw new Error("Api key cannot contain whitespace");
       }
     }
   }

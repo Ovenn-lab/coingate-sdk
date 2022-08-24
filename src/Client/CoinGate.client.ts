@@ -1,19 +1,19 @@
 import { AbstractService } from "../Modules/Utils/Utils.service";
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { apiErrorException } from "../Exception/ApiErrorException";
+import { ApiErrorException } from "../Exception/ApiErrorException";
+import { Get } from "./types";
 
 export class CoinGateClient extends AbstractService {
-  static VERSION = "4.1.0";
-
   private client: AxiosInstance;
 
   protected apiKey: string | null;
 
+  protected baseUrl: string;
+
   constructor(baseUrl: string) {
     super();
-    this.client = axios.create({
-      baseURL: baseUrl,
-    });
+    this.baseUrl = baseUrl;
+    this.client = axios.create();
     this.apiKey = null;
   }
 
@@ -21,9 +21,13 @@ export class CoinGateClient extends AbstractService {
     this.apiKey = apiKey;
   }
 
-  protected async sendPostRequest(path: string, body: object) {
+  public setClientEnviroment(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
+
+  protected async post(path: string, body: object) {
     try {
-      const { data } = await this.client.post(path, body, {
+      const { data } = await this.client.post(this.baseUrl + path, body, {
         headers: {
           Authorization: `${this.apiKey}`,
         },
@@ -31,21 +35,21 @@ export class CoinGateClient extends AbstractService {
 
       return data;
     } catch (e) {
-      return apiErrorException(e as AxiosError);
+      throw new ApiErrorException(e as AxiosError);
     }
   }
 
-  protected async sendGetRequest(path: string, params?: object) {
+  protected async get({ path, params, apiKey }: Get) {
     try {
-      const { data } = await this.client.get(path, {
+      const { data } = await this.client.get(this.baseUrl + path, {
         params,
         headers: {
-          Authorization: `${this.apiKey}`,
+          Authorization: `${apiKey || this.apiKey}`,
         },
       });
       return data;
     } catch (e) {
-      return apiErrorException(e as AxiosError);
+      throw new ApiErrorException(e as AxiosError);
     }
   }
 }
