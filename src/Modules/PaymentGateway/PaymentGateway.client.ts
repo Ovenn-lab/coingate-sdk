@@ -2,17 +2,17 @@ import { CoinGateClient } from "../../Client/CoinGate.client";
 import { CheckoutBody, CreateOrderBody, ListOrdersData } from "./types";
 
 export class PaymentGatewayClient extends CoinGateClient {
-  constructor() {
-    super();
+  constructor(baseUrl: string) {
+    super(baseUrl);
   }
 
   public async createOrder(body: CreateOrderBody) {
-    return this.sendPostRequest("orders/", body);
+    return this.sendPostRequest("v2/orders/", body);
   }
 
   public checkout(id: number, body: CheckoutBody) {
     const path = this.buildPath({
-      path: "orders/:id/checkout",
+      path: "v2/orders/:id/checkout",
       params: { id },
     });
     return this.sendPostRequest(path, body);
@@ -20,13 +20,13 @@ export class PaymentGatewayClient extends CoinGateClient {
 
   public getOrder(id: number) {
     const path = this.buildPath({
-      path: "orders/:id/",
+      path: "v2/orders/:id/",
       params: { id },
     });
     return this.sendGetRequest(path);
   }
 
   public async listOrders(params?: ListOrdersData) {
-    return this.sendGetRequest("orders/", params);
+    return this.sendGetRequest("v2/orders/", params);
   }
 }

@@ -1,19 +1,18 @@
 import { AbstractService } from "../Modules/Utils/Utils.service";
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance } from "axios";
+import { apiErrorException } from "../Exception/ApiErrorException";
 
 export class CoinGateClient extends AbstractService {
   static VERSION = "4.1.0";
-
-  protected coinGateUrl = "https://api-sandbox.coingate.com/v2/";
 
   private client: AxiosInstance;
 
   protected apiKey: string | null;
 
-  constructor() {
+  constructor(baseUrl: string) {
     super();
     this.client = axios.create({
-      baseURL: this.coinGateUrl,
+      baseURL: baseUrl,
     });
     this.apiKey = null;
   }
@@ -22,7 +21,7 @@ export class CoinGateClient extends AbstractService {
     this.apiKey = apiKey;
   }
 
-  public async sendPostRequest(path: string, body: object) {
+  protected async sendPostRequest(path: string, body: object) {
     try {
       const { data } = await this.client.post(path, body, {
         headers: {
@@ -32,11 +31,11 @@ export class CoinGateClient extends AbstractService {
 
       return data;
     } catch (e) {
-      console.log(e);
+      return apiErrorException(e as AxiosError);
     }
   }
 
-  public async sendGetRequest(path: string, params?: object) {
+  protected async sendGetRequest(path: string, params?: object) {
     try {
       const { data } = await this.client.get(path, {
         params,
@@ -46,7 +45,7 @@ export class CoinGateClient extends AbstractService {
       });
       return data;
     } catch (e) {
-      console.log(e);
+      return apiErrorException(e as AxiosError);
     }
   }
 }

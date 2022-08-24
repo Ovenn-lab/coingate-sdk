@@ -2,13 +2,13 @@ import { CoinGateClient } from "../../Client/CoinGate.client";
 import { CreateOrderRefundBody } from "./types";
 
 export class RefundsClient extends CoinGateClient {
-  constructor() {
-    super();
+  constructor(baseUrl: string) {
+    super(baseUrl);
   }
 
   public createOrderRefund(order_id: number, body: CreateOrderRefundBody) {
     const path = this.buildPath({
-      path: "orders/:order_id/refunds",
+      path: "v2/orders/:order_id/refunds",
       params: { order_id },
     });
     return this.sendPostRequest(path, body);
@@ -16,7 +16,7 @@ export class RefundsClient extends CoinGateClient {
 
   public getOrderRefund(order_id: number, id: number) {
     const path = this.buildPath({
-      path: "orders/:order_id/refunds/:id",
+      path: "v2/orders/:order_id/refunds/:id",
       params: { order_id, id },
     });
     return this.sendGetRequest(path);
@@ -24,14 +24,13 @@ export class RefundsClient extends CoinGateClient {
 
   public getOrderRefunds(order_id: number) {
     const path = this.buildPath({
-      path: "orders/:order_id/refunds",
+      path: "v2/orders/:order_id/refunds",
       params: { order_id },
     });
-    console.log(path);
     return this.sendGetRequest(path);
   }
 
   public getRefunds() {
-    return this.sendGetRequest("refunds");
+    return this.sendGetRequest("v2/refunds");
   }
 }

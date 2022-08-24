@@ -1,27 +1,32 @@
 import { Client } from "./Clients";
 
-const client = new Client("Bearer P_gkiNVtFZkNy1kCekx6fdwsfCT-dWL21tsxrHh_");
+const client = new Client(
+  "Bearer P_gkiNVtFZkNy1kCekx6fdwsfCT-dWL21tsxrHh_",
+  true
+);
 
-client.paymentGateway.checkout(32800, { pay_currency: "ETH" });
+// "Bearer P_gkiNVtFZkNy1kCekx6fdwsfCT-dWL21tsxrHh_",
+//   "sandbox"
+
+// client.paymentGateway.checkout(32800, { pay_currency: "ETH" });
 // client.paymentGateway.listOrders();
 
 // client.paymentGateway.getOrder(32810);
 
-// client.refunds.createOrderRefund(32820, {
-//   amount: 50,
-//   address: "2MxRdYGDdyFiqkMUUksTJ3Qey8sTQPfTii9",
-//   currency_id: 1,
-//   platform_id: 2,
-//   reason: "for test purposes",
-//   email: "testDrive@gmail.com",
-//   ledger_account_id: "random",
-// });
-
 const test = async () => {
-  const test = await client.paymentGateway.listOrders();
+  const test = await client.refunds.createOrderRefund(32820, {
+    amount: 50,
+    address: "2MxRdYGDdyFiqkMUUksTJ3Qey8sTQPfTii9",
+    currency_id: 1,
+    platform_id: 2,
+    reason: "for test purposes",
+    email: "testDrive@gmail.com",
+    ledger_account_id: "random",
+  });
+  // const test = await client.public.getExchangeRate({ from: "EUR", to: "EUR" });
   console.log(test);
 };
-// test();
+test();
 // client.paymentGateway.createOrder({
 //   price_amount: 150.5,
 //   price_currency: "EUR",

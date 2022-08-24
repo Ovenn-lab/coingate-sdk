@@ -10,7 +10,6 @@ export class AbstractService {
     for (const [key, value] of Object.entries(params)) {
       path = path.replace(`:${key}`, value);
     }
-    console.log(path);
     return path;
   }
 }
