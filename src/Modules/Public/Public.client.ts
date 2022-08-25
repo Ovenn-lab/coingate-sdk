@@ -6,13 +6,13 @@ export class PublicClient extends CoinGateClient {
     super(baseUrl);
   }
 
-  public async getExchangeRate(options?: { from: string; to: string }) {
+  public getExchangeRate(options?: { from: string; to: string }) {
     const path = this.buildPath({
       path: "/v2/rates/merchant/",
       pathEnd: ":from/:to",
       params: options,
     });
-    return await this.get({ path });
+    return this.get({ path });
   }
 
   public listExchangeRates() {
@@ -27,15 +27,21 @@ export class PublicClient extends CoinGateClient {
     return this.get({ path: "/v2/ips-v4/", params: { separator } });
   }
 
-  public async getCurrencies(params: getCurrenciesData) {
+  public getCurrencies(params: getCurrenciesData) {
     return this.get({ path: "/v2/currencies/", params });
   }
 
-  public async platforms(enabled?: "true" | "false") {
+  public platforms(enabled?: "true" | "false") {
     return this.get({ path: "/v2/currencies/", params: { enabled } });
   }
 
-  public async test(apiKey: string) {
-    return this.get({ path: "/v2/auth/test", apiKey: `Bearer ${apiKey}` });
+  public async test(apiKey: string): Promise<boolean> {
+    try {
+      await this.get({ path: "/v2/auth/test", apiKey: `Bearer ${apiKey}` });
+
+      return true;
+    } catch {
+      return false;
+    }
   }
 }

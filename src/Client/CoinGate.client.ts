@@ -1,6 +1,17 @@
 import { AbstractService } from "../Modules/Utils/Utils.service";
-import axios, { AxiosError, AxiosInstance } from "axios";
-import { ApiErrorException } from "../Exception/ApiErrorException";
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import {
+  BadAuthToken,
+  BadRequest,
+  InternalServerError,
+  NotFound,
+  OrderIsNotValid,
+  OrderNotFound,
+  RateLimitException,
+  Unauthorized,
+  UnknownApiErrorException,
+  UnprocessableEntity,
+} from "../Exception";
 import { Get } from "./types";
 
 export class CoinGateClient extends AbstractService {
@@ -35,7 +46,7 @@ export class CoinGateClient extends AbstractService {
 
       return data;
     } catch (e) {
-      throw new ApiErrorException(e as AxiosError);
+      this.handleErrorResponse(e as AxiosError);
     }
   }
 
@@ -49,7 +60,47 @@ export class CoinGateClient extends AbstractService {
       });
       return data;
     } catch (e) {
-      throw new ApiErrorException(e as AxiosError);
+      this.handleErrorResponse(e as AxiosError);
     }
+  }
+
+  private handleErrorResponse({ response }: AxiosError) {
+    const {
+      status,
+      data: { reason },
+    } = response as AxiosResponse;
+
+    if (status === 400) {
+      throw BadRequest.factory(response!, status);
+    } else if (status === 401) {
+      switch (reason) {
+        case "BadAuthToken":
+          throw BadAuthToken.factory(response!, status);
+        default:
+          throw Unauthorized.factory(response!, status);
+      }
+    } else if (status === 404) {
+      switch (reason) {
+        case "OrderNotFound":
+          throw OrderNotFound.factory(response!, status);
+        default:
+          throw NotFound.factory(response!, status);
+      }
+    } else if (status === 422) {
+      switch (reason) {
+        case "OrderNotFound":
+          throw OrderNotFound.factory(response!, status);
+        case "OrderIsNotValid":
+          throw OrderIsNotValid.factory(response!, status);
+        default:
+          throw UnprocessableEntity.factory(response!, status);
+      }
+    } else if (status === 429) {
+      throw RateLimitException.factory(response!, status);
+    } else if ([500, 504].includes(status)) {
+      throw InternalServerError.factory(response!, status);
+    }
+
+    throw UnknownApiErrorException.factory(response!, status);
   }
 }

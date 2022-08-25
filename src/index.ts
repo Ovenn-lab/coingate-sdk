@@ -16,7 +16,7 @@ const test = async () => {
     // const test = await client.public.test(
     //   "P_gkiNVtFZkNy1kCekx6f dwsfCT-dWL21tsxrHh_"
     // );
-    console.log({ test });
+    // console.log({ test });
   } catch (e) {
     // console.log(e);
   }
