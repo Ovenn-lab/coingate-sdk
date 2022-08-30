@@ -1,7 +1,1 @@
-// <?php
-
-// namespace CoinGate\Exception;
-
-// class UnexpectedValueException extends \UnexpectedValueException
-// {
-// }
+export class UnexpectedValueException extends Error {}

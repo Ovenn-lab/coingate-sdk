@@ -1,24 +1,22 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from 'axios';
 
-export class ApiErrorException {
+export class ApiErrorException extends Error {
   protected reason: string | null = null;
 
   protected errors: string[] = [];
 
   protected httpStatus: number | null = null;
 
-  constructor(private message: string) {}
-
   public static factory(response: AxiosResponse, status: number) {
     const {
-      data: { reason, errors, message },
+      data: { reason, errors, message }
     } = response;
     const instance = new this(message || null);
     instance.setReason(reason);
     instance.setErrorDetails(errors);
     instance.setHttpStatus(status);
-    console.log(instance);
-    return instance;
+    return console.error(instance);
+    // cia nzn ar gerai
   }
 
   public setReason(reason: string | null): string | null {

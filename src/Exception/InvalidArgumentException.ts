@@ -1,7 +1,1 @@
-// <?php
-
-// namespace CoinGate\Exception;
-
-// class InvalidArgumentException extends \InvalidArgumentException
-// {
-// }
+export class InvalidArgumentException extends Error {}
