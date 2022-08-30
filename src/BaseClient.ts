@@ -21,18 +21,17 @@ export class BaseClient {
     protected useSandboxEnv?: boolean
   ) {
     const config = {
-      ...this.getDefaultConfig(),
-      ...{ api_key: apiKey, enviroment: useSandboxEnv ? 'live' : 'sandbox' }
+      ...this.getDefaultConfig(useSandboxEnv),
+      ...{ api_key: apiKey, enviroment: useSandboxEnv ? 'sandbox' : 'live' }
     } as ConfigType;
 
     this.validateConfig(config);
 
-    const baseUrl = useSandboxEnv
-      ? this.SANDBOX_DEFAULT_API_BASE
-      : this.DEFAULT_API_BASE;
-    this.public = new PublicClient(baseUrl);
-    this.refunds = new RefundsClient(baseUrl);
-    this.paymentGateway = new PaymentGatewayClient(baseUrl);
+    const { api_base } = config;
+
+    this.public = new PublicClient(api_base);
+    this.refunds = new RefundsClient(api_base);
+    this.paymentGateway = new PaymentGatewayClient(api_base);
     this.clients = [this.public, this.paymentGateway, this.refunds];
     this.setApiKey(`Bearer ${apiKey}`);
   }
@@ -54,10 +53,12 @@ export class BaseClient {
     }
   }
 
-  private getDefaultConfig() {
+  private getDefaultConfig(useSandboxEnv?: boolean) {
     return {
       api_key: null,
-      api_base: this.DEFAULT_API_BASE,
+      api_base: useSandboxEnv
+        ? this.SANDBOX_DEFAULT_API_BASE
+        : this.DEFAULT_API_BASE,
       enviroment: 'live'
     };
   }
@@ -82,7 +83,7 @@ export class BaseClient {
     }
 
     if (typeof api_base !== 'string') {
-      throw new InvalidArgumentException('api_base');
+      throw new InvalidArgumentException('api_base must be a string');
     }
     if (!['live', 'sandbox'].includes(enviroment)) {
       throw new InvalidArgumentException(
