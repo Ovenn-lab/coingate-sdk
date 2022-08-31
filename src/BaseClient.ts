@@ -1,6 +1,6 @@
 import { InvalidArgumentException } from './Exception';
-import { ConfigType } from '#types';
 import { PaymentGatewayClient, PublicClient, RefundsClient } from './Modules';
+import { ConfigType, EnviromentEnum } from './types';
 export class BaseClient {
   static VERSION = '4.1.0';
 
@@ -16,50 +16,55 @@ export class BaseClient {
 
   private clients: [PublicClient, PaymentGatewayClient, RefundsClient];
 
+  private config: ConfigType;
+
   constructor(
     protected apiKey: string | null,
     protected useSandboxEnv?: boolean
   ) {
-    const config = {
+    this.config = {
       ...this.getDefaultConfig(useSandboxEnv),
-      ...{ api_key: apiKey, enviroment: useSandboxEnv ? 'sandbox' : 'live' }
+      ...{
+        apiKey: apiKey,
+        enviroment: useSandboxEnv ? EnviromentEnum.SANDBOX : EnviromentEnum.LIVE
+      }
     } as ConfigType;
 
-    this.validateConfig(config);
+    this.validateConfig(this.config);
 
-    const { api_base } = config;
+    const { apiBase } = this.config;
 
-    this.public = new PublicClient(api_base);
-    this.refunds = new RefundsClient(api_base);
-    this.paymentGateway = new PaymentGatewayClient(api_base);
+    console.log(this.config);
+
+    this.public = new PublicClient(apiBase);
+    this.refunds = new RefundsClient(apiBase);
+    this.paymentGateway = new PaymentGatewayClient(apiBase);
     this.clients = [this.public, this.paymentGateway, this.refunds];
-    this.setApiKey(`Bearer ${apiKey}`);
+    this.setModulesApiKey(apiKey);
   }
 
-  setApiKey(apiKey: string | null) {
+  setModulesApiKey(apiKey: string | null) {
     this.clients.forEach((client) => client.setApiKey(apiKey));
   }
 
-  setEnviroment(enviroment: 'live' | 'sandbox') {
-    if (enviroment === 'sandbox') {
-      this.clients.forEach((client) =>
-        client.setClientEnviroment(this.SANDBOX_DEFAULT_API_BASE)
-      );
-    }
-    if (enviroment === 'live') {
-      this.clients.forEach((client) =>
-        client.setClientEnviroment(this.DEFAULT_API_BASE)
-      );
-    }
+  setEnviroment(enviroment: EnviromentEnum) {
+    this.clients.forEach((client) => {
+      switch (enviroment) {
+        case EnviromentEnum.SANDBOX:
+          return client.setBaseUrl(this.SANDBOX_DEFAULT_API_BASE);
+        default:
+          return client.setBaseUrl(this.DEFAULT_API_BASE);
+      }
+    });
   }
 
   private getDefaultConfig(useSandboxEnv?: boolean) {
     return {
-      api_key: null,
-      api_base: useSandboxEnv
+      apiKey: null,
+      apiBase: useSandboxEnv
         ? this.SANDBOX_DEFAULT_API_BASE
         : this.DEFAULT_API_BASE,
-      enviroment: 'live'
+      enviroment: EnviromentEnum.LIVE
     };
   }
 
@@ -67,25 +72,26 @@ export class BaseClient {
     return this.public.test(apiKey);
   }
 
-  private validateConfig({ api_base, api_key, enviroment }: ConfigType) {
-    if (api_key !== null) {
-      if (typeof api_key !== 'string') {
-        throw new InvalidArgumentException('api_key must be null or a string');
+  private validateConfig({ apiBase, apiKey, enviroment }: ConfigType) {
+    if (apiKey !== null) {
+      if (typeof apiKey !== 'string') {
+        throw new InvalidArgumentException('apiKey must be null or a string');
       }
 
-      if (api_key.length === 0) {
-        throw new InvalidArgumentException('api_key cannot be empty string');
+      if (apiKey.length === 0) {
+        throw new InvalidArgumentException('apiKey cannot be empty string');
       }
 
-      if (/\s/.test(api_key)) {
-        throw new InvalidArgumentException('api_key cannot contain whitespace');
+      if (/\s/.test(apiKey)) {
+        throw new InvalidArgumentException('apiKey cannot contain whitespace');
       }
     }
 
-    if (typeof api_base !== 'string') {
+    if (typeof apiBase !== 'string') {
       throw new InvalidArgumentException('api_base must be a string');
     }
-    if (!['live', 'sandbox'].includes(enviroment)) {
+
+    if (![EnviromentEnum.LIVE, EnviromentEnum.SANDBOX].includes(enviroment)) {
       throw new InvalidArgumentException(
         'Environment does not exist. Available environments: live, sandbox.'
       );

@@ -1,11 +1,8 @@
 import { CoinGateClient } from '../../Client/CoinGate.client';
+
 import { CreateOrderRefundBody } from './types';
 
 export class RefundsClient extends CoinGateClient {
-  constructor(baseUrl: string) {
-    super(baseUrl);
-  }
-
   public createOrderRefund(order_id: number, body: CreateOrderRefundBody) {
     const path = this.buildPath({
       path: '/v2/orders/:order_id/refunds',

@@ -1,0 +1,39 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "plugins": ["@typescript-eslint/eslint-plugin", "prettier", "import"],
+  "extends": [
+    "airbnb-typescript/base",
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:import/typescript"
+  ],
+
+  "parser": "@typescript-eslint/parser",
+  "overrides": [],
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external"], "parent", "sibling"],
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "**",
+            "group": "parent"
+          }
+        ]
+      }
+    ]
+  }
+}

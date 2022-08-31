@@ -1,11 +1,8 @@
 import { CoinGateClient } from '../../Client/CoinGate.client';
+
 import { CheckoutBody, CreateOrderBody, ListOrdersData } from './types';
 
 export class PaymentGatewayClient extends CoinGateClient {
-  constructor(baseUrl: string) {
-    super(baseUrl);
-  }
-
   public async createOrder(body: CreateOrderBody) {
     return this.post('/v2/orders/', body);
   }

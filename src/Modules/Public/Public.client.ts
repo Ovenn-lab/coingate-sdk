@@ -1,11 +1,8 @@
 import { CoinGateClient } from '../../Client/CoinGate.client';
-import { getCurrenciesData } from './types';
+
+import { GetCurrenciesData } from './types';
 
 export class PublicClient extends CoinGateClient {
-  constructor(baseUrl: string) {
-    super(baseUrl);
-  }
-
   public getExchangeRate(options?: { from: string; to: string }) {
     const path = this.buildPath({
       path: '/v2/rates/merchant/',
@@ -27,7 +24,7 @@ export class PublicClient extends CoinGateClient {
     return this.get({ path: '/v2/ips-v4/', params: { separator } });
   }
 
-  public getCurrencies(params: getCurrenciesData) {
+  public getCurrencies(params: GetCurrenciesData) {
     return this.get({ path: '/v2/currencies/', params });
   }
 

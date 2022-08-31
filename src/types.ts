@@ -1,5 +1,10 @@
 export type ConfigType = {
-  api_key: string | null;
-  enviroment: string;
-  api_base: 'string';
+  apiKey: string | null;
+  enviroment: EnviromentEnum;
+  apiBase: 'string';
 };
+
+export enum EnviromentEnum {
+  LIVE = 'live',
+  SANDBOX = 'sandbox'
+}

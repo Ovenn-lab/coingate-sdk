@@ -1,9 +1,14 @@
-export type getExchangeRateData = { from: string; to: string };
+export type GetExchangeRateData = { from: string; to: string };
 
-export type getCurrenciesData = {
+export type GetCurrenciesData = {
   native: boolean;
   enabled: boolean;
   merchant_pay: boolean;
   merchant_receive: boolean;
-  kind: 'fiat' | 'crypto';
+  kind: CurrencyKind;
 };
+
+export enum CurrencyKind {
+  FIAT = 'fiat',
+  CRYPRO = 'crypto'
+}

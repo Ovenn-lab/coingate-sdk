@@ -11,18 +11,18 @@ export class ApiErrorException extends Error {
     const {
       data: { reason, errors, message }
     } = response;
-    const instance = new this(message || null);
-    instance.setReason(reason);
-    instance.setErrorDetails(errors);
-    instance.setHttpStatus(status);
-    return console.error(instance);
-    // cia nzn ar gerai
+    const error = new this(message || null);
+    error.setReason(reason);
+    error.setErrorDetails(errors);
+    error.setHttpStatus(status);
+    return error;
   }
 
   public setReason(reason: string | null): string | null {
     this.reason = reason;
     return this.reason;
   }
+
   public getReason(): string | null {
     return this.reason;
   }
@@ -32,6 +32,7 @@ export class ApiErrorException extends Error {
 
     return this.errors;
   }
+
   public getErrorDetails(): string[] {
     return this.errors;
   }
