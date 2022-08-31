@@ -1,5 +1,5 @@
-import { AbstractService } from "../Modules/Utils/Utils.service";
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import { AbstractService } from '../Modules/Utils/Utils.service';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import {
   BadAuthToken,
   BadRequest,
@@ -8,11 +8,12 @@ import {
   OrderIsNotValid,
   OrderNotFound,
   RateLimitException,
+  RefundIsNotValid,
   Unauthorized,
   UnknownApiErrorException,
-  UnprocessableEntity,
-} from "../Exception";
-import { Get } from "./types";
+  UnprocessableEntity
+} from '../Exception';
+import { Get } from './types';
 
 export class CoinGateClient extends AbstractService {
   private client: AxiosInstance;
@@ -40,8 +41,8 @@ export class CoinGateClient extends AbstractService {
     try {
       const { data } = await this.client.post(this.baseUrl + path, body, {
         headers: {
-          Authorization: `${this.apiKey}`,
-        },
+          Authorization: `${this.apiKey}`
+        }
       });
 
       return data;
@@ -55,8 +56,8 @@ export class CoinGateClient extends AbstractService {
       const { data } = await this.client.get(this.baseUrl + path, {
         params,
         headers: {
-          Authorization: `${apiKey || this.apiKey}`,
-        },
+          Authorization: `${apiKey || this.apiKey}`
+        }
       });
       return data;
     } catch (e) {
@@ -67,31 +68,33 @@ export class CoinGateClient extends AbstractService {
   private handleErrorResponse({ response }: AxiosError) {
     const {
       status,
-      data: { reason },
+      data: { reason }
     } = response as AxiosResponse;
 
     if (status === 400) {
       throw BadRequest.factory(response!, status);
     } else if (status === 401) {
       switch (reason) {
-        case "BadAuthToken":
+        case 'BadAuthToken':
           throw BadAuthToken.factory(response!, status);
         default:
           throw Unauthorized.factory(response!, status);
       }
     } else if (status === 404) {
       switch (reason) {
-        case "OrderNotFound":
+        case 'OrderNotFound':
           throw OrderNotFound.factory(response!, status);
         default:
           throw NotFound.factory(response!, status);
       }
     } else if (status === 422) {
       switch (reason) {
-        case "OrderNotFound":
+        case 'OrderNotFound':
           throw OrderNotFound.factory(response!, status);
-        case "OrderIsNotValid":
+        case 'OrderIsNotValid':
           throw OrderIsNotValid.factory(response!, status);
+        case 'RefundIsNotValid':
+          throw RefundIsNotValid.factory(response!, status);
         default:
           throw UnprocessableEntity.factory(response!, status);
       }

@@ -1,3 +1,3 @@
 import { ApiErrorException } from '../ApiErrorException';
 
-export class Unauthorized extends ApiErrorException {}
+export class RefundIsNotValid extends ApiErrorException {}

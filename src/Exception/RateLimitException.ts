@@ -1,3 +1,3 @@
-import { ApiErrorException } from "./ApiErrorException";
+import { ApiErrorException } from './ApiErrorException';
 
 export class RateLimitException extends ApiErrorException {}

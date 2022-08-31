@@ -1,7 +1,7 @@
 export type ListOrdersData = {
   per_page?: number;
   page?: number;
-  sort?: "created_at_asc" | "created_at_desc";
+  sort?: 'created_at_asc' | 'created_at_desc';
   from?: string;
   to?: string;
 };
