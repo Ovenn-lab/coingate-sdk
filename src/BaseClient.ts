@@ -4,9 +4,9 @@ import { ConfigType, EnviromentEnum } from './types';
 export class BaseClient {
   static VERSION = '4.1.0';
 
-  protected DEFAULT_API_BASE = 'https://api.coingate.com';
+  private DEFAULT_API_BASE = 'https://api.coingate.com';
 
-  protected SANDBOX_DEFAULT_API_BASE = 'https://api-sandbox.coingate.com';
+  private SANDBOX_DEFAULT_API_BASE = 'https://api-sandbox.coingate.com';
 
   public public: PublicClient;
 
@@ -33,8 +33,6 @@ export class BaseClient {
     this.validateConfig(this.config);
 
     const { apiBase } = this.config;
-
-    console.log(this.config);
 
     this.public = new PublicClient(apiBase);
     this.refunds = new RefundsClient(apiBase);

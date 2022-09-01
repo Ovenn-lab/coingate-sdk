@@ -8,7 +8,7 @@ import { GetRequestType } from './types';
 export class CoinGateClient extends AbstractService {
   private client: AxiosInstance;
 
-  protected apiKey: string | null;
+  private apiKey: string | null;
 
   protected baseUrl: string;
 
