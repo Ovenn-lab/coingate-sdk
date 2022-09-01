@@ -8,5 +8,7 @@ export class Client extends BaseClient {
     super(apiKey, useSandboxEnv);
   }
 
-  // todo
+  // public get(){}
+
+  // public call() {}
 }

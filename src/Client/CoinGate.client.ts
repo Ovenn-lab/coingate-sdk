@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 
-import { AbstractService } from '../Modules/Utils/Utils.service';
+import { AbstractService } from '../Modules/AbstractService/Abstract.service';
 import { handleErrorResponse } from '../Exception';
 
 import { GetRequestType } from './types';
