@@ -7,7 +7,6 @@ export class AbstractService {
         path = path.replace(`:${key}`, value);
       }
     }
-    console.log(path);
     return path;
   }
 }
