@@ -31,10 +31,9 @@ export class CoinGateClient extends AbstractService {
     try {
       const { data } = await this.client.post(this.baseUrl + path, body, {
         headers: {
-          Authorization: `Bearer ${this.apiKey}`
-        }
+          Authorization: `Bearer ${this.apiKey}`,
+        },
       });
-
       return data;
     } catch (e) {
       handleErrorResponse(e as AxiosError);
@@ -46,8 +45,8 @@ export class CoinGateClient extends AbstractService {
       const { data } = await this.client.get(this.baseUrl + path, {
         params,
         headers: {
-          Authorization: `Bearer ${apiKey || this.apiKey}`
-        }
+          Authorization: `Bearer ${apiKey || this.apiKey}`,
+        },
       });
       return data;
     } catch (e) {
