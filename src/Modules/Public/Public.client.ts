@@ -6,7 +6,7 @@ export class PublicClient extends CoinGateClient {
   public getExchangeRate(options?: { from: string; to: string }) {
     const path = this.buildPath({
       path: '/v2/rates/merchant/',
-      pathEnd: ':from/:to',
+      pathEnd: ':from/:to', //padaryt kad istirn tu
       params: options
     });
     return this.get({ path });
