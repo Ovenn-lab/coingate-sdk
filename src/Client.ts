@@ -2,7 +2,7 @@ import { InvalidArgumentException } from './Exception';
 import { PaymentGatewayClient, PublicClient, RefundsClient } from './Modules';
 import { AppInfo, ConfigType, EnviromentEnum } from './types';
 
-export class BaseClient {
+export class Client {
   private DEFAULT_API_BASE = 'https://api.coingate.com';
 
   private SANDBOX_DEFAULT_API_BASE = 'https://api-sandbox.coingate.com';
@@ -20,13 +20,13 @@ export class BaseClient {
   public refunds: RefundsClient;
 
   constructor(
-    protected apiKey: string | null,
+    protected apiKey?: string | null,
     protected useSandboxEnv?: boolean
   ) {
     this.config = {
       ...this.getDefaultConfig(useSandboxEnv),
       ...{
-        apiKey: apiKey,
+        apiKey: apiKey || null,
         enviroment: useSandboxEnv ? EnviromentEnum.SANDBOX : EnviromentEnum.LIVE
       }
     } as ConfigType;
@@ -42,7 +42,7 @@ export class BaseClient {
     this.paymentGateway = new PaymentGatewayClient(apiBase);
 
     this.clients = [this.public, this.paymentGateway, this.refunds];
-    this.setApiKey(apiKey);
+    this.setApiKey(this.config.apiKey);
   }
 
   public setApiKey(apiKey: string | null) {
@@ -52,9 +52,12 @@ export class BaseClient {
     this.clients.forEach((client) => client.setApiKey(this.config.apiKey));
   }
 
-  public setEnviroment(enviroment: EnviromentEnum) {
-    this.validateConfig({ ...this.config, enviroment });
-    this.config = { ...this.config, enviroment };
+  public setEnviroment(enviroment: string) {
+    this.validateConfig({
+      ...this.config,
+      enviroment: enviroment as EnviromentEnum
+    });
+    this.config = { ...this.config, enviroment: enviroment as EnviromentEnum };
 
     this.clients.forEach((client) => {
       switch (enviroment) {
