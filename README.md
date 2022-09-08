@@ -133,7 +133,7 @@ const data = {
   ledger_account_id: 'ID of the trader balance'
 };
 
-const refund = client.refunds.createOrderRefund(1234, data);
+const refund = await client.refunds.createOrderRefund(1234, data);
 ```
 
 #### Get Order Refund
@@ -141,7 +141,7 @@ const refund = client.refunds.createOrderRefund(1234, data);
 Retrieving a specific refund for an order.
 
 ```ts
-const refund = client.refunds.getOrderRefund(1234, 4321);
+const refund = await client.refunds.getOrderRefund(1234, 4321);
 ```
 
 #### Get Order Refunds
@@ -149,7 +149,7 @@ const refund = client.refunds.getOrderRefund(1234, 4321);
 Retrieving all refunds for an order.
 
 ```ts
-const refund = client.refunds.getOrderRefunds(1234);
+const refund = await client.refunds.getOrderRefunds(1234);
 ```
 
 #### Get Refunds
@@ -157,7 +157,7 @@ const refund = client.refunds.getOrderRefunds(1234);
 Retrieving all refunds.
 
 ```ts
-const refund = client.refunds.getRefunds();
+const refund = await client.refunds.getRefunds();
 ```
 
 ### Public API
