@@ -1,13 +1,12 @@
 import { CoinGateClient } from '../../Client/CoinGate.client';
 
-import { GetCurrenciesData } from './types';
+import { CurrencyKind, GetCurrenciesData } from './types';
 
 export class PublicClient extends CoinGateClient {
-  public getExchangeRate(options?: { from: string; to: string }) {
+  public getExchangeRate(from: string, to: string) {
     const path = this.buildPath({
-      path: '/v2/rates/merchant/',
-      pathEnd: ':from/:to',
-      params: options
+      path: '/v2/rates/merchant/:from/:to',
+      params: { from, to }
     });
     return this.get({ path });
   }
@@ -24,11 +23,39 @@ export class PublicClient extends CoinGateClient {
     return this.get({ path: '/v2/ips-v4/', params: { separator } });
   }
 
-  public getCurrencies(params: GetCurrenciesData) {
-    return this.get({ path: '/v2/currencies/', params });
+  public getCurrencies(params?: GetCurrenciesData) {
+    return this.get({
+      path: '/v2/currencies/',
+      params
+    });
   }
 
-  public platforms(enabled?: 'true' | 'false') {
+  public getCheckoutCurrencies() {
+    return this.getCurrencies({
+      kind: CurrencyKind.CRYPRO,
+      native: true,
+      merchant_pay: true
+    });
+  }
+
+  public getMerchantPayCurrencies(kind?: CurrencyKind) {
+    return this.getCurrencies({
+      kind,
+      native: false,
+      merchant_pay: true
+    });
+  }
+
+  public getMerchantPayoutCurrencies(kind?: CurrencyKind) {
+    return this.getCurrencies({
+      kind,
+      native: false,
+      merchant_pay: false,
+      merchant_receive: true
+    });
+  }
+
+  public getPlatforms(enabled?: 'true' | 'false') {
     return this.get({ path: '/v2/currencies/', params: { enabled } });
   }
 
