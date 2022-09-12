@@ -118,4 +118,12 @@ export class Client {
     this.appInfo = { name: name.trim(), version: version?.trim() };
     this.clients.forEach((client) => client.setAppInfo({ name, version }));
   }
+
+  public getApiKey() {
+    return this.config.apiKey;
+  }
+
+  public getEnviroment() {
+    return this.config.enviroment;
+  }
 }

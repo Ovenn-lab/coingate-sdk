@@ -12,7 +12,7 @@
     "lint": "eslint",
     "lint:fix": "eslint '{src,apps,libs,test}/**/*.ts' --fix",
     "test:watch": "jest --watch",
-    "test": "jest --coverage",
+    "test": "jest",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
