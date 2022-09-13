@@ -3,8 +3,10 @@ import axios, { AxiosError, AxiosInstance } from 'axios';
 import { AbstractService } from '../Modules/AbstractService/Abstract.service';
 import { handleErrorResponse } from '../Exception';
 
-import { GetRequestType } from './types';
+import { GetRequestType, HeadersType } from './types';
 import { AppInfo } from '../types';
+import { CreateOrderRefundBody } from '../Modules/Refunds/types';
+import { CheckoutBody, CreateOrderBody } from '../Modules/PaymentGateway/types';
 
 export class CoinGateClient extends AbstractService {
   private VERSION = '1.0.0';
@@ -36,11 +38,15 @@ export class CoinGateClient extends AbstractService {
     this.appInfo = { name, version };
   }
 
-  protected async post(path: string, body: object) {
+  protected async post(
+    path: string,
+    body: CreateOrderRefundBody | CreateOrderBody | CheckoutBody
+  ) {
     try {
       const { data } = await this.client.post(this.baseUrl + path, body, {
         headers: this.getDefaultHeaders()
       });
+
       return data;
     } catch (e) {
       handleErrorResponse(e as AxiosError);
@@ -53,14 +59,15 @@ export class CoinGateClient extends AbstractService {
         params,
         headers: this.getDefaultHeaders(apiKey)
       });
+
       return data;
     } catch (e) {
       handleErrorResponse(e as AxiosError);
     }
   }
 
-  protected getDefaultHeaders(apiKey?: string) {
-    let headers: any = {
+  private getDefaultHeaders(apiKey?: string) {
+    let headers: HeadersType = {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
 
@@ -75,7 +82,7 @@ export class CoinGateClient extends AbstractService {
       headers = {
         'User-Agent': `Coingate/v2 (Node.js library v ${this.VERSION}, ${
           this.appInfo.name
-        } ${this.appInfo.version ? 'v' + this.appInfo.version : ''})`,
+        } ${this.appInfo.version ? 'v ' + this.appInfo.version : ''})`,
         ...headers
       };
     } else {
@@ -85,7 +92,6 @@ export class CoinGateClient extends AbstractService {
       };
     }
 
-    console.log(headers);
     return headers;
   }
 }
