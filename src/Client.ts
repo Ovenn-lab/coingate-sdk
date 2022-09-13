@@ -63,7 +63,7 @@ export class Client {
     };
   }
 
-  private prepareModules(apiBase: string) {
+  public prepareModules(apiBase: string) {
     this.public = new PublicClient(apiBase);
     this.refunds = new RefundsClient(apiBase);
     this.paymentGateway = new PaymentGatewayClient(apiBase);
@@ -73,9 +73,12 @@ export class Client {
     return this.public.test(apiKey);
   }
 
-  private validateConfig(config?: ConfigType) {
-    const { apiBase, apiKey, enviroment } = config || this.config;
+  public www() {
+    return true;
+  }
 
+  public validateConfig(config?: ConfigType) {
+    const { apiBase, apiKey, enviroment } = config || this.config;
     if (apiKey !== null) {
       if (typeof apiKey !== 'string') {
         throw new InvalidArgumentException('apiKey must be null or a string');

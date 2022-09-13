@@ -4,12 +4,17 @@ module.exports = {
   testMatch: ['**/test/**/*.spec.ts'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/types/**/*.ts',
+    '!<rootDir>/src/types/**/*.ts'
   ],
   globals: {
     'ts-jest': {
       diagnostics: false,
-      isolatedModules: true,
-    },
+      isolatedModules: true
+    }
   },
+  moduleNameMapper: {
+    '^@shared$': '<rootDir>/shared/',
+    '^@components$': '<rootDir>/shared/components/',
+    '#(.*)$': '<rootDir>/src/$1'
+  }
 };
