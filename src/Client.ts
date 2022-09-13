@@ -13,15 +13,15 @@ export class Client {
 
   private appInfo: AppInfo | undefined;
 
-  public public: PublicClient;
+  public public!: PublicClient;
 
-  public paymentGateway: PaymentGatewayClient;
+  public paymentGateway!: PaymentGatewayClient;
 
-  public refunds: RefundsClient;
+  public refunds!: RefundsClient;
 
   constructor(
     protected apiKey?: string | null,
-    protected useSandboxEnv?: boolean
+    protected useSandboxEnv?: boolean | null
   ) {
     this.config = {
       ...this.getDefaultConfig(useSandboxEnv),
@@ -29,48 +29,32 @@ export class Client {
         apiKey: apiKey || null,
         enviroment: useSandboxEnv ? EnviromentEnum.SANDBOX : EnviromentEnum.LIVE
       }
-    } as ConfigType;
+    };
 
-    this.validateConfig(this.config);
+    this.validateConfig();
 
     const { apiBase } = this.config;
 
     //  issikelti i set modules methoda ar kazkas tokio
     // ZODZIU, CIA NEISEJO SU ARRAY PADARYT IR JEI ISKELIU I KITA METHODA, TADA VIRSUJE BRAUKIA KAD CONSTRUCTORIUI NEASIGNINTA
-    this.public = new PublicClient(apiBase);
-    this.refunds = new RefundsClient(apiBase);
-    this.paymentGateway = new PaymentGatewayClient(apiBase);
+    this.prepareModules(apiBase);
 
     this.clients = [this.public, this.paymentGateway, this.refunds];
     this.setApiKey(this.config.apiKey);
   }
 
-  public setApiKey(apiKey: string | null) {
-    this.validateConfig({ ...this.config, apiKey });
-    this.config = { ...this.config, apiKey };
-
-    this.clients.forEach((client) => client.setApiKey(this.config.apiKey));
+  public getAppInfo() {
+    return this.appInfo;
+  }
+  public getApiKey() {
+    return this.config.apiKey;
   }
 
-  public setEnviroment(enviroment: string) {
-    this.validateConfig({
-      ...this.config,
-      enviroment: enviroment as EnviromentEnum
-    });
-    this.config = { ...this.config, enviroment: enviroment as EnviromentEnum };
-
-    this.clients.forEach((client) => {
-      switch (enviroment) {
-        case EnviromentEnum.SANDBOX:
-          return client.setBaseUrl(this.SANDBOX_DEFAULT_API_BASE);
-        case EnviromentEnum.LIVE:
-        default:
-          return client.setBaseUrl(this.DEFAULT_API_BASE);
-      }
-    });
+  public getEnviroment() {
+    return this.config.enviroment;
   }
 
-  private getDefaultConfig(useSandboxEnv?: boolean) {
+  private getDefaultConfig(useSandboxEnv?: boolean | null) {
     return {
       apiKey: null,
       apiBase: useSandboxEnv
@@ -80,11 +64,19 @@ export class Client {
     };
   }
 
-  testConnection(apiKey: string) {
+  private prepareModules(apiBase: string) {
+    this.public = new PublicClient(apiBase);
+    this.refunds = new RefundsClient(apiBase);
+    this.paymentGateway = new PaymentGatewayClient(apiBase);
+  }
+
+  public testConnection(apiKey?: string | null) {
     return this.public.test(apiKey);
   }
 
-  private validateConfig({ apiBase, apiKey, enviroment }: ConfigType) {
+  private validateConfig(config?: ConfigType) {
+    const { apiBase, apiKey, enviroment } = config || this.config;
+
     if (apiKey !== null) {
       if (typeof apiKey !== 'string') {
         throw new InvalidArgumentException('apiKey must be null or a string');
@@ -105,25 +97,43 @@ export class Client {
 
     if (![EnviromentEnum.LIVE, EnviromentEnum.SANDBOX].includes(enviroment)) {
       throw new InvalidArgumentException(
-        'Environment does not exist. Available environments: live, sandbox.'
+        `Environment does not exist. Available environments: ${Object.values(
+          EnviromentEnum
+        ).join(', ')}`
       );
     }
   }
 
-  public getAppInfo() {
-    return this.appInfo;
+  public setApiKey(apiKey: string | null) {
+    const config = { ...this.config, apiKey };
+    this.validateConfig(config);
+    this.config = config;
+
+    this.clients.forEach((client) => client.setApiKey(this.config.apiKey));
+  }
+
+  public setEnviroment(enviroment: EnviromentEnum | string) {
+    const config = { ...this.config, enviroment: enviroment as EnviromentEnum };
+
+    this.validateConfig(config);
+    this.config = config;
+    this.setBaseUrlByEnv(this.config.enviroment);
+  }
+
+  private setBaseUrlByEnv(enviroment: EnviromentEnum) {
+    this.clients.forEach((client) => {
+      switch (enviroment) {
+        case EnviromentEnum.SANDBOX:
+          return client.setBaseUrl(this.SANDBOX_DEFAULT_API_BASE);
+        case EnviromentEnum.LIVE:
+        default:
+          return client.setBaseUrl(this.DEFAULT_API_BASE);
+      }
+    });
   }
 
   public setAppInfo({ name, version }: AppInfo) {
     this.appInfo = { name: name.trim(), version: version?.trim() };
     this.clients.forEach((client) => client.setAppInfo({ name, version }));
-  }
-
-  public getApiKey() {
-    return this.config.apiKey;
-  }
-
-  public getEnviroment() {
-    return this.config.enviroment;
   }
 }

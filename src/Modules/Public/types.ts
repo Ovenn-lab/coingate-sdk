@@ -10,5 +10,5 @@ export type GetCurrenciesData = {
 
 export enum CurrencyKind {
   FIAT = 'fiat',
-  CRYPRO = 'crypto'
+  CRYPTO = 'crypto'
 }

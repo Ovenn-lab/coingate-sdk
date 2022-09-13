@@ -32,7 +32,7 @@ export class PublicClient extends CoinGateClient {
 
   public getCheckoutCurrencies() {
     return this.getCurrencies({
-      kind: CurrencyKind.CRYPRO,
+      kind: CurrencyKind.CRYPTO,
       native: true,
       merchant_pay: true
     });
@@ -59,7 +59,7 @@ export class PublicClient extends CoinGateClient {
     return this.get({ path: '/v2/currencies/', params: { enabled } });
   }
 
-  public async test(apiKey: string): Promise<boolean> {
+  public async test(apiKey?: string | null): Promise<boolean> {
     try {
       await this.get({ path: '/v2/auth/test', apiKey: `Bearer ${apiKey}` });
 
