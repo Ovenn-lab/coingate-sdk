@@ -61,6 +61,7 @@ try {
   const order = await client.paymentGateway.createOrder(data);
 } catch (error) {
   // Oops... Something went wrong...
+  console.error(error);
 }
 ```
 
@@ -80,6 +81,7 @@ try {
   const checkout = await client.paymentGateway.checkout(1234, data);
 } catch (error) {
   // Oops... Something went wrong...
+  console.error(error);
 }
 ```
 
@@ -92,6 +94,7 @@ try {
   const order = await client.paymentGateway.getOrder(1234); // order id
 } catch (error) {
   // Oops... Something went wrong...
+  console.error(error);
 }
 ```
 
@@ -112,6 +115,7 @@ try {
   const orders = await client.paymentGateway.listOrders(data); // data is optional
 } catch (error) {
   // Oops... Something went wrong...
+  console.error(error);
 }
 ```
 
