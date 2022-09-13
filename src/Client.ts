@@ -1,5 +1,6 @@
-import { InvalidArgumentException } from './Exception';
-import { PaymentGatewayClient, PublicClient, RefundsClient } from './Modules';
+import { PaymentGatewayClient, PublicClient, RefundsClient } from '#Modules';
+import { InvalidArgumentException } from '#Exception';
+
 import { AppInfo, ConfigType, EnviromentEnum } from './types';
 
 export class Client {
