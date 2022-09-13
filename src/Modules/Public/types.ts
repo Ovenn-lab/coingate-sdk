@@ -12,3 +12,7 @@ export enum CurrencyKind {
   FIAT = 'fiat',
   CRYPTO = 'crypto'
 }
+
+export type SeparatorType = {
+  separator: string;
+};

@@ -1,13 +1,17 @@
-import { GetCurrenciesData, GetExchangeRateData } from '#Modules/Public/types';
+import { PaymentParamType } from '#Modules/PaymentGateway/types';
+import {
+  GetCurrenciesData,
+  GetExchangeRateData,
+  SeparatorType
+} from '#Modules/Public/types';
+import { RefundParamsType } from '#Modules/Refunds/types';
 
 export type BuildPathInput = {
   path: string;
   params?:
-    | {
-        separator?: string;
-        order_id?: number;
-        id?: number;
-      }
     | GetExchangeRateData
-    | GetCurrenciesData;
+    | GetCurrenciesData
+    | PaymentParamType
+    | SeparatorType
+    | RefundParamsType;
 };

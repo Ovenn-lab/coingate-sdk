@@ -8,3 +8,5 @@ export type CreateOrderRefundBody = {
   email: string;
   ledger_account_id: string;
 };
+
+export type RefundParamsType = { order_id?: string; id?: string };

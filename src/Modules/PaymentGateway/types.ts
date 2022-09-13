@@ -26,3 +26,7 @@ export type CheckoutBody = {
   purchaser_email?: string;
   platform_id?: string;
 };
+
+export type PaymentParamType = {
+  id: string;
+};
