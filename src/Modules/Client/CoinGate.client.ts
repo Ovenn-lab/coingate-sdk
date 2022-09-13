@@ -4,9 +4,9 @@ import { AbstractService } from '#Modules/AbstractService/Abstract.service';
 import { handleErrorResponse } from '../../Exception';
 import { CreateOrderRefundBody } from '#/Modules/Refunds/types';
 import { CheckoutBody, CreateOrderBody } from '#/Modules/PaymentGateway/types';
-import { AppInfo } from '../../types';
+import { AppInfo } from '#types';
 
-import { GetRequestType, HeadersType } from './types';
+import { GetRequestType, HeadersType, RequestTypeEnum } from './types';
 
 export class CoinGateClient extends AbstractService {
   private VERSION = '1.0.0';
@@ -44,7 +44,7 @@ export class CoinGateClient extends AbstractService {
   ) {
     try {
       const { data } = await this.client.post(this.baseUrl + path, body, {
-        headers: this.getDefaultHeaders()
+        headers: this.getDefaultHeaders(RequestTypeEnum.POST)
       });
 
       return data;
@@ -57,7 +57,7 @@ export class CoinGateClient extends AbstractService {
     try {
       const { data } = await this.client.get(this.baseUrl + path, {
         params,
-        headers: this.getDefaultHeaders(apiKey)
+        headers: this.getDefaultHeaders(RequestTypeEnum.GET, apiKey)
       });
 
       return data;
@@ -66,10 +66,14 @@ export class CoinGateClient extends AbstractService {
     }
   }
 
-  private getDefaultHeaders(apiKey?: string) {
-    let headers: HeadersType = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
+  private getDefaultHeaders(requestType: RequestTypeEnum, apiKey?: string) {
+    let headers: HeadersType;
+
+    if (requestType === RequestTypeEnum.POST) {
+      headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      };
+    }
 
     if (this.apiKey) {
       headers = {

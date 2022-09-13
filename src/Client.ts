@@ -63,7 +63,7 @@ export class Client {
     };
   }
 
-  public prepareModules(apiBase: string) {
+  private prepareModules(apiBase: string) {
     this.public = new PublicClient(apiBase);
     this.refunds = new RefundsClient(apiBase);
     this.paymentGateway = new PaymentGatewayClient(apiBase);
@@ -73,11 +73,7 @@ export class Client {
     return this.public.test(apiKey);
   }
 
-  public www() {
-    return true;
-  }
-
-  public validateConfig(config?: ConfigType) {
+  private validateConfig(config?: ConfigType) {
     const { apiBase, apiKey, enviroment } = config || this.config;
     if (apiKey !== null) {
       if (typeof apiKey !== 'string') {
@@ -94,7 +90,7 @@ export class Client {
     }
 
     if (typeof apiBase !== 'string') {
-      throw new InvalidArgumentException('api_base must be a string');
+      throw new InvalidArgumentException('apiBase must be a string');
     }
 
     if (![EnviromentEnum.LIVE, EnviromentEnum.SANDBOX].includes(enviroment)) {

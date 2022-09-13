@@ -9,3 +9,8 @@ export type HeadersType = {
   Authorization?: string;
   'User-Agent'?: string;
 };
+
+export enum RequestTypeEnum {
+  GET = 'get',
+  POST = 'post'
+}

@@ -56,8 +56,11 @@ export class PublicClient extends CoinGateClient {
     });
   }
 
-  public getPlatforms(enabled?: 'true' | 'false') {
-    return this.get({ path: '/v2/currencies/', params: { enabled } });
+  public getPlatforms(enabled?: boolean) {
+    return this.get({
+      path: '/v2/currencies/',
+      params: { enabled: enabled ? 'true' : 'false' }
+    });
   }
 
   public async test(apiKey?: string | null): Promise<boolean> {
