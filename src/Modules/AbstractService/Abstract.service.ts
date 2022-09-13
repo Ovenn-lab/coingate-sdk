@@ -1,4 +1,5 @@
 import { BuildPathInput } from './types';
+
 export class AbstractService {
   protected buildPath({ path, params }: BuildPathInput) {
     if (params) {
@@ -6,6 +7,7 @@ export class AbstractService {
         path = path.replace(`:${key}`, value);
       }
     }
+
     return path;
   }
 }

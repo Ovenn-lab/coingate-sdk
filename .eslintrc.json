@@ -1,8 +1,4 @@
 {
-  "env": {
-    "es2021": true,
-    "node": true
-  },
   "plugins": ["@typescript-eslint/eslint-plugin", "prettier", "import"],
   "extends": [
     "airbnb-typescript/base",
@@ -16,12 +12,53 @@
   ],
 
   "parser": "@typescript-eslint/parser",
-  "overrides": [],
   "parserOptions": {
     "project": "tsconfig.json",
     "sourceType": "module"
   },
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true
+  },
   "rules": {
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "class-methods-use-this": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-underscore-dangle": "off",
+    "lines-between-class-members": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "no-console": "off",
+    "no-shadow": "off",
+    "object-curly-spacing": ["error", "always"],
+    "no-non-null-assertion": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-throw-literal": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.spec.ts", "**/*.e2e.ts", "**/Mocks.ts"] }
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "import/no-unresolved": "error",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "js": "never"
+      }
+    ],
     "import/order": [
       "error",
       {
@@ -34,6 +71,23 @@
           }
         ]
       }
-    ]
+    ],
+    "default-case": "off"
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      },
+      "node": {
+        "extensions": [".ts"]
+      },
+      "alias": {
+        "map": [["#/", "./src"]]
+      }
+    }
   }
 }

@@ -1,12 +1,13 @@
-export interface ClientInterface {
-  method: string;
-  absUrl: string;
-  headers: string[];
-  params: string[];
-}
+import { GetCurrenciesData, GetExchangeRateData } from '#Modules/Public/types';
 
 export type BuildPathInput = {
   path: string;
-  pathEnd?: string;
-  params?: object;
+  params?:
+    | {
+        separator?: string;
+        order_id?: number;
+        id?: number;
+      }
+    | GetExchangeRateData
+    | GetCurrenciesData;
 };

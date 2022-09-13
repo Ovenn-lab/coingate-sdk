@@ -10,11 +10,9 @@ import {
   Unauthorized,
   UnprocessableEntity
 } from './Api';
-
 import { InternalServerError } from './InternalServerError';
 import { RateLimitException } from './RateLimitException';
 import { UnknownApiErrorException } from './UnknownApiErrorException';
-
 import { ErrorReasonEnum, HttpStatusEnum } from './types';
 
 export const handleErrorResponse = ({ response }: AxiosError) => {

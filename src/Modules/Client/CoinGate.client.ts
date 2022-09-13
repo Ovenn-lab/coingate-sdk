@@ -1,12 +1,12 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 
-import { AbstractService } from '../Modules/AbstractService/Abstract.service';
-import { handleErrorResponse } from '../Exception';
+import { AbstractService } from '#Modules/AbstractService/Abstract.service';
+import { handleErrorResponse } from '../../Exception';
+import { CreateOrderRefundBody } from '#/Modules/Refunds/types';
+import { CheckoutBody, CreateOrderBody } from '#/Modules/PaymentGateway/types';
+import { AppInfo } from '../../types';
 
 import { GetRequestType, HeadersType } from './types';
-import { AppInfo } from '../types';
-import { CreateOrderRefundBody } from '../Modules/Refunds/types';
-import { CheckoutBody, CreateOrderBody } from '../Modules/PaymentGateway/types';
 
 export class CoinGateClient extends AbstractService {
   private VERSION = '1.0.0';

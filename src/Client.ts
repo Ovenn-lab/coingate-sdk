@@ -35,10 +35,7 @@ export class Client {
 
     const { apiBase } = this.config;
 
-    //  issikelti i set modules methoda ar kazkas tokio
-    // ZODZIU, CIA NEISEJO SU ARRAY PADARYT IR JEI ISKELIU I KITA METHODA, TADA VIRSUJE BRAUKIA KAD CONSTRUCTORIUI NEASIGNINTA
     this.prepareModules(apiBase);
-
     this.clients = [this.public, this.paymentGateway, this.refunds];
     this.setApiKey(this.config.apiKey);
   }
@@ -46,6 +43,7 @@ export class Client {
   public getAppInfo() {
     return this.appInfo;
   }
+
   public getApiKey() {
     return this.config.apiKey;
   }

@@ -1,4 +1,4 @@
-import { CoinGateClient } from '../../Client/CoinGate.client';
+import { CoinGateClient } from '#Modules/Client/CoinGate.client';
 
 import { CheckoutBody, CreateOrderBody, ListOrdersData } from './types';
 
