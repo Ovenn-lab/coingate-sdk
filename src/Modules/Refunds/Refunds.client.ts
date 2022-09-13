@@ -8,6 +8,7 @@ export class RefundsClient extends CoinGateClient {
       path: '/v2/orders/:order_id/refunds',
       params: { order_id }
     });
+
     return this.post(path, body);
   }
 
@@ -16,6 +17,7 @@ export class RefundsClient extends CoinGateClient {
       path: '/v2/orders/:order_id/refunds/:id',
       params: { order_id, id }
     });
+
     return this.get({ path });
   }
 
@@ -24,6 +26,7 @@ export class RefundsClient extends CoinGateClient {
       path: '/v2/orders/:order_id/refunds',
       params: { order_id }
     });
+
     return this.get({ path });
   }
 

@@ -12,6 +12,7 @@ export class PaymentGatewayClient extends CoinGateClient {
       path: '/v2/orders/:id/checkout',
       params: { id }
     });
+
     return this.post(path, body);
   }
 
@@ -20,6 +21,7 @@ export class PaymentGatewayClient extends CoinGateClient {
       path: '/v2/orders/:id/',
       params: { id }
     });
+
     return this.get({ path });
   }
 

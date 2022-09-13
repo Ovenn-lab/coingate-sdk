@@ -8,6 +8,7 @@ export class PublicClient extends CoinGateClient {
       path: '/v2/rates/merchant/:from/:to',
       params
     });
+
     return this.get({ path });
   }
 
