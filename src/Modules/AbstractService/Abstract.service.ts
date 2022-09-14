@@ -14,7 +14,7 @@ export class AbstractService {
     return newPath;
   }
 
-  protected validateApiKey(apiKey: string) {
+  protected validateApiKey(apiKey: string | null) {
     if (apiKey !== null) {
       if (typeof apiKey !== 'string') {
         throw new InvalidArgumentException('apiKey must be null or a string');

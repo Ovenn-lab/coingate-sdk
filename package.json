@@ -39,6 +39,7 @@
   },
   "homepage": "... todo",
   "devDependencies": {
+    "@types/faker": "^5.5.8",
     "@types/jest": "^27.5.2",
     "@types/node": "^12.20.11",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
@@ -118,6 +119,7 @@
     ]
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "faker": "^5.5.3"
   }
 }
