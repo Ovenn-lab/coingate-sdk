@@ -1,13 +1,15 @@
-import { PaymentGatewayClient, PublicClient, RefundsClient } from '#Modules';
+import {
+  PaymentGatewayClient,
+  PublicClient,
+  RefundsClient,
+  AbstractService
+} from '#Modules';
 import { InvalidArgumentException } from '#Exception';
+import { BaseUrlEnum } from '#Modules/Client/types';
 
 import { AppInfo, ConfigType, EnviromentEnum } from './types';
 
-export class Client {
-  private DEFAULT_API_BASE = 'https://api.coingate.com';
-
-  private SANDBOX_DEFAULT_API_BASE = 'https://api-sandbox.coingate.com';
-
+export class Client extends AbstractService {
   private clients: [PublicClient, PaymentGatewayClient, RefundsClient];
 
   private config: ConfigType;
@@ -24,6 +26,7 @@ export class Client {
     protected apiKey?: string | null,
     protected useSandboxEnv?: boolean | null
   ) {
+    super();
     this.config = {
       ...this.getDefaultConfig(useSandboxEnv),
       ...{
@@ -57,8 +60,8 @@ export class Client {
     return {
       apiKey: null,
       apiBase: useSandboxEnv
-        ? this.SANDBOX_DEFAULT_API_BASE
-        : this.DEFAULT_API_BASE,
+        ? BaseUrlEnum.SANDBOX_DEFAULT_API_BASE
+        : BaseUrlEnum.DEFAULT_API_BASE,
       enviroment: EnviromentEnum.LIVE
     };
   }
@@ -75,19 +78,8 @@ export class Client {
 
   private validateConfig(config?: ConfigType) {
     const { apiBase, apiKey, enviroment } = config || this.config;
-    if (apiKey !== null) {
-      if (typeof apiKey !== 'string') {
-        throw new InvalidArgumentException('apiKey must be null or a string');
-      }
 
-      if (apiKey.length === 0) {
-        throw new InvalidArgumentException('apiKey cannot be empty string');
-      }
-
-      if (/\s/.test(apiKey)) {
-        throw new InvalidArgumentException('apiKey cannot contain whitespace');
-      }
-    }
+    this.validateApiKey(apiKey);
 
     if (typeof apiBase !== 'string') {
       throw new InvalidArgumentException('apiBase must be a string');
@@ -122,10 +114,10 @@ export class Client {
     this.clients.forEach((client) => {
       switch (enviroment) {
         case EnviromentEnum.SANDBOX:
-          return client.setBaseUrl(this.SANDBOX_DEFAULT_API_BASE);
+          return client.setBaseUrl(BaseUrlEnum.SANDBOX_DEFAULT_API_BASE);
         case EnviromentEnum.LIVE:
         default:
-          return client.setBaseUrl(this.DEFAULT_API_BASE);
+          return client.setBaseUrl(BaseUrlEnum.DEFAULT_API_BASE);
       }
     });
   }

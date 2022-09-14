@@ -1,3 +1,5 @@
+import { InvalidArgumentException } from '#Exception';
+
 import { BuildPathInput } from './types';
 
 export class AbstractService {
@@ -10,5 +12,21 @@ export class AbstractService {
     }
 
     return newPath;
+  }
+
+  protected validateApiKey(apiKey: string) {
+    if (apiKey !== null) {
+      if (typeof apiKey !== 'string') {
+        throw new InvalidArgumentException('apiKey must be null or a string');
+      }
+
+      if (apiKey.length === 0) {
+        throw new InvalidArgumentException('apiKey cannot be empty string');
+      }
+
+      if (/\s/.test(apiKey)) {
+        throw new InvalidArgumentException('apiKey cannot contain whitespace');
+      }
+    }
   }
 }

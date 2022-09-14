@@ -9,4 +9,4 @@ export type CreateOrderRefundBody = {
   ledger_account_id: string;
 };
 
-export type RefundParamsType = { order_id?: string; id?: string };
+export type RefundParamsType = { order_id?: number; id?: number };

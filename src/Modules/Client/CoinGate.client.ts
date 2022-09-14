@@ -6,7 +6,12 @@ import { CreateOrderRefundBody } from '#/Modules/Refunds/types';
 import { CheckoutBody, CreateOrderBody } from '#/Modules/PaymentGateway/types';
 import { AppInfo } from '#types';
 
-import { GetRequestType, HeadersType, RequestTypeEnum } from './types';
+import {
+  BaseUrlEnum,
+  GetRequestType,
+  HeadersType,
+  RequestTypeEnum
+} from './types';
 
 export class CoinGateClient extends AbstractService {
   private VERSION = '1.0.0';
@@ -27,10 +32,11 @@ export class CoinGateClient extends AbstractService {
   }
 
   public setApiKey(apiKey: string | null) {
+    this.validateApiKey(apiKey);
     this.apiKey = apiKey;
   }
 
-  public setBaseUrl(baseUrl: string) {
+  public setBaseUrl(baseUrl: BaseUrlEnum) {
     this.baseUrl = baseUrl;
   }
 
