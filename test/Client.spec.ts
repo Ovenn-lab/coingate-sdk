@@ -14,7 +14,7 @@ describe('Client', () => {
         .mockReturnValue(undefined);
     });
 
-    test('should set api key if its matching criteria', () => {
+    test('should set api key when its matching criteria', () => {
       const result = client.setApiKey(mockConfig.apiKey);
 
       expect(result).toBe(undefined);
