@@ -1,6 +1,10 @@
 import { CoinGateClient } from '#Modules/Client/CoinGate.client';
 
-import { CurrencyKind, GetCurrenciesData, GetExchangeRateData } from './types';
+import {
+  CurrencyKindEnum,
+  GetCurrenciesData,
+  GetExchangeRateData
+} from './types';
 
 export class PublicClient extends CoinGateClient {
   public getExchangeRate(params: GetExchangeRateData) {
@@ -33,13 +37,13 @@ export class PublicClient extends CoinGateClient {
 
   public getCheckoutCurrencies() {
     return this.getCurrencies({
-      kind: CurrencyKind.CRYPTO,
+      kind: CurrencyKindEnum.CRYPTO,
       native: true,
       merchant_pay: true
     });
   }
 
-  public getMerchantPayCurrencies(kind?: CurrencyKind) {
+  public getMerchantPayCurrencies(kind?: CurrencyKindEnum) {
     return this.getCurrencies({
       kind,
       native: false,
@@ -47,7 +51,7 @@ export class PublicClient extends CoinGateClient {
     });
   }
 
-  public getMerchantPayoutCurrencies(kind?: CurrencyKind) {
+  public getMerchantPayoutCurrencies(kind?: CurrencyKindEnum) {
     return this.getCurrencies({
       kind,
       native: false,
@@ -63,9 +67,9 @@ export class PublicClient extends CoinGateClient {
     });
   }
 
-  public async test(apiKey?: string | null): Promise<boolean> {
+  public async test(apiKey: string): Promise<boolean> {
     try {
-      await this.get({ path: '/v2/auth/test', apiKey: `Bearer ${apiKey}` });
+      await this.get({ apiKey, path: '/v2/auth/test' });
 
       return true;
     } catch {

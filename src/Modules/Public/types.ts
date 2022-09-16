@@ -5,10 +5,10 @@ export type GetCurrenciesData = {
   enabled?: boolean;
   merchant_pay?: boolean;
   merchant_receive?: boolean;
-  kind?: CurrencyKind;
+  kind?: CurrencyKindEnum;
 };
 
-export enum CurrencyKind {
+export enum CurrencyKindEnum {
   FIAT = 'fiat',
   CRYPTO = 'crypto'
 }

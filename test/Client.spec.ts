@@ -1,4 +1,4 @@
-import { Client } from '../src';
+import { Client } from '../src/Client';
 
 import { mockConfig } from './Mocks';
 
@@ -70,7 +70,7 @@ describe('Client', () => {
     });
 
     test('should throw error if enviroment is not: live, sandbox', () => {
-      const result = () => client.setEnviroment('wrong');
+      const result = () => client.setEnviroment('local');
 
       expect(result).toThrow(
         'Environment does not exist. Available environments: live, sandbox'
@@ -79,7 +79,7 @@ describe('Client', () => {
       expect(validateConfigSpy).toHaveBeenCalledWith({
         ...mockConfig,
         apiKey: null,
-        enviroment: 'wrong'
+        enviroment: 'local'
       });
     });
   });
