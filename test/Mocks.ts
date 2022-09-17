@@ -36,3 +36,22 @@ export const mockRefundsData = {
   order_id: faker.datatype.number(500),
   id: faker.datatype.number(500)
 };
+
+export const mockCreateOrderData = {
+  price_amount: faker.datatype.number(500),
+  price_currency: 'USD',
+  receive_currency: 'BTC'
+};
+
+export const mockCheckoutData = {
+  pay_currency: 'USD'
+};
+
+export const mockOrderId = faker.datatype.number(500);
+
+export const mockListOrdersParams = {
+  per_page: faker.datatype.number(10),
+  page: faker.datatype.number(10),
+  from: '2022-06-22',
+  to: '2077-06-22'
+};
