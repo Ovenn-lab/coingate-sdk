@@ -46,7 +46,7 @@ export class CoinGateClient extends AbstractService {
 
   protected async post(
     path: string,
-    body: CreateOrderRefundBody | CreateOrderBody | CheckoutBody
+    body?: CreateOrderRefundBody | CreateOrderBody | CheckoutBody
   ) {
     try {
       const { data } = await this.client.post(this.baseUrl + path, body, {
