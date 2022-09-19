@@ -1,4 +1,4 @@
-import faker, { fake } from 'faker';
+import faker from 'faker';
 
 import { EnviromentEnum } from '../src/types';
 import { BaseUrlEnum } from '../src/Modules/Client/types';
@@ -9,6 +9,13 @@ export const mockConfig = {
   apiKey: faker.datatype.hexaDecimal(30),
   apiBase: BaseUrlEnum.SANDBOX_DEFAULT_API_BASE
 };
+
+export const mockWrongApiKeys = {
+  keyWithWhitespace: ` ${mockConfig.apiKey}`,
+  keyEmpty: ''
+};
+
+export const mockWrongEnviroment = 'local';
 
 export const mockExchangeRateData = { from: 'USD', to: 'EUR' };
 
