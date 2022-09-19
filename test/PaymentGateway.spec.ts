@@ -7,7 +7,7 @@ import {
 } from './Mocks';
 
 describe('PaymentGateway', () => {
-  let paymentGateway: PaymentGatewayClient;
+  let paymentGateway;
   let getSpy;
   let postSpy;
 

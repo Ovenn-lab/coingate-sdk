@@ -2,7 +2,7 @@ import { RefundsClient } from '../src/Modules';
 import { mockOrderRefundData, mockRefundsData } from './Mocks';
 
 describe('RefundsClient', () => {
-  let refundsClient: RefundsClient;
+  let refundsClient;
   let getSpy;
   let postSpy;
 
