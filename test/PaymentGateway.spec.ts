@@ -10,6 +10,7 @@ describe('PaymentGateway', () => {
   let paymentGateway: PaymentGatewayClient;
   let getSpy;
   let postSpy;
+
   beforeEach(() => {
     paymentGateway = new PaymentGatewayClient();
     getSpy = jest.spyOn(paymentGateway, 'get');
