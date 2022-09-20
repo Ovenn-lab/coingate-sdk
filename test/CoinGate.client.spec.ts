@@ -1,7 +1,7 @@
 import { CoinGateClient } from '../src/Modules';
 import { BaseUrlEnum, RequestTypeEnum } from '../src/Modules/Client/types';
 
-import { mockConfig } from './Mocks';
+import { mockConfig, mockWrongApiKeys } from './Mocks';
 
 describe('CoinGate client', () => {
   let coinGateClient: CoinGateClient;
@@ -23,19 +23,22 @@ describe('CoinGate client', () => {
     });
 
     test('should throw an error if apiKey contains whitespace', () => {
-      const result = () => coinGateClient.setApiKey(` ${mockConfig.apiKey} `);
+      const result = () =>
+        coinGateClient.setApiKey(mockWrongApiKeys.keyWithWhitespace);
 
       expect(result).toThrow('apiKey cannot contain whitespace');
       expect(validateApiKeySpy).toHaveBeenCalledTimes(1);
-      expect(validateApiKeySpy).toHaveBeenCalledWith(` ${mockConfig.apiKey} `);
+      expect(validateApiKeySpy).toHaveBeenCalledWith(
+        mockWrongApiKeys.keyWithWhitespace
+      );
     });
 
     test('should throw an error if apiKey is empty string', () => {
-      const result = () => coinGateClient.setApiKey('');
+      const result = () => coinGateClient.setApiKey(mockWrongApiKeys.keyEmpty);
 
       expect(result).toThrow('apiKey cannot be empty string');
       expect(validateApiKeySpy).toHaveBeenCalledTimes(1);
-      expect(validateApiKeySpy).toHaveBeenCalledWith('');
+      expect(validateApiKeySpy).toHaveBeenCalledWith(mockWrongApiKeys.keyEmpty);
     });
   });
 

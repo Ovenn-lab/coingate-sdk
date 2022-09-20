@@ -2,7 +2,7 @@ import { RefundsClient } from '../src/Modules';
 import { mockOrderRefundData, mockRefundsData } from './Mocks';
 
 describe('RefundsClient', () => {
-  let refundsClient: RefundsClient;
+  let refundsClient;
   let getSpy;
   let postSpy;
 
@@ -36,7 +36,7 @@ describe('RefundsClient', () => {
   });
 
   describe('getOrderRefund method', () => {
-    test('should build patg and call get method with it', () => {
+    test('should build path and call get method with it', () => {
       const { order_id, id } = mockRefundsData;
       const buildPathSpy = jest.spyOn(refundsClient, 'buildPath');
       const result = refundsClient.getOrderRefund(order_id, id);

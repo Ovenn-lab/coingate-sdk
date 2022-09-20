@@ -1,5 +1,5 @@
 {
-  "plugins": ["@typescript-eslint/eslint-plugin", "prettier", "import"],
+  "plugins": ["@typescript-eslint/eslint-plugin", "prettier"],
   "extends": [
     "airbnb-typescript/base",
     "eslint:recommended",
@@ -8,8 +8,7 @@
     "plugin:jest/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:import/typescript"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -24,8 +23,6 @@
     "jest/globals": true
   },
   "rules": {
-    "import/no-named-as-default": "off",
-    "import/no-named-as-default-member": "off",
     "class-methods-use-this": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/interface-name-prefix": "off",
@@ -44,7 +41,14 @@
     "@typescript-eslint/no-throw-literal": "off",
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*.spec.ts", "**/*.e2e.ts", "**/Mocks.ts"] }
+      {
+        "devDependencies": [
+          "**/*.spec.ts",
+          "**/*.e2e.ts",
+          "**/Mocks.ts",
+          "**/Helpers/Tests/*.ts"
+        ]
+      }
     ],
     "no-param-reassign": [
       "error",
@@ -60,21 +64,7 @@
         "ts": "never",
         "js": "never"
       }
-    ],
-    "import/order": [
-      "error",
-      {
-        "groups": [["builtin", "external"], "parent", "sibling"],
-        "newlines-between": "always",
-        "pathGroups": [
-          {
-            "pattern": "**",
-            "group": "parent"
-          }
-        ]
-      }
-    ],
-    "default-case": "off"
+    ]
   },
   "settings": {
     "import/parsers": {
@@ -90,6 +80,9 @@
       "alias": {
         "map": [["#/", "./src"]]
       }
+    },
+    "jest": {
+      "version": 26
     }
   }
 }

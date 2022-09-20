@@ -1,6 +1,6 @@
 import { Client } from '../src/Client';
 
-import { mockConfig } from './Mocks';
+import { mockConfig, mockWrongApiKeys, mockWrongEnviroment } from './Mocks';
 
 describe('Client', () => {
   let client: Client;
@@ -23,25 +23,25 @@ describe('Client', () => {
     });
 
     test('should throw an error if apiKey contains whitespaces', () => {
-      const result = () => client.setApiKey(` ${mockConfig.apiKey} `);
+      const result = () => client.setApiKey(mockWrongApiKeys.keyWithWhitespace);
 
       expect(result).toThrow('apiKey cannot contain whitespace');
       expect(validateConfigSpy).toHaveBeenCalledTimes(1);
       expect(validateConfigSpy).toHaveBeenCalledWith({
         ...mockConfig,
-        apiKey: ` ${mockConfig.apiKey} `
+        apiKey: mockWrongApiKeys.keyWithWhitespace
       });
     });
 
     test('should throw an error if apiKey is an empty string', () => {
-      const result = () => client.setApiKey('');
+      const result = () => client.setApiKey(mockWrongApiKeys.keyEmpty);
 
       expect(result).toThrow('apiKey cannot be empty string');
 
       expect(validateConfigSpy).toHaveBeenCalledTimes(1);
       expect(validateConfigSpy).toHaveBeenCalledWith({
         ...mockConfig,
-        apiKey: ''
+        apiKey: mockWrongApiKeys.keyEmpty
       });
     });
   });
@@ -70,7 +70,7 @@ describe('Client', () => {
     });
 
     test('should throw error if enviroment is not: live, sandbox', () => {
-      const result = () => client.setEnviroment('local');
+      const result = () => client.setEnviroment(mockWrongEnviroment);
 
       expect(result).toThrow(
         'Environment does not exist. Available environments: live, sandbox'
@@ -79,7 +79,7 @@ describe('Client', () => {
       expect(validateConfigSpy).toHaveBeenCalledWith({
         ...mockConfig,
         apiKey: null,
-        enviroment: 'local'
+        enviroment: mockWrongEnviroment
       });
     });
   });
@@ -100,6 +100,7 @@ describe('Client', () => {
     beforeAll(() => {
       client = new Client(null, true);
     });
+
     test('should return current enviroment', () => {
       const result = client.getEnviroment();
 

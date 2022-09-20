@@ -7,9 +7,10 @@ import {
 } from './Mocks';
 
 describe('PaymentGateway', () => {
-  let paymentGateway: PaymentGatewayClient;
+  let paymentGateway;
   let getSpy;
   let postSpy;
+
   beforeEach(() => {
     paymentGateway = new PaymentGatewayClient();
     getSpy = jest.spyOn(paymentGateway, 'get');

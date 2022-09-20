@@ -195,7 +195,7 @@ const pong = await client.public.ping();
 Get IP addresses of CoinGate servers
 
 ```ts
-const addresses = await client.public.getIPAddresses();
+const addresses = await client.public.getIPAddresses(); // Possible to provide separator, like: ', '
 ```
 
 #### Currencies

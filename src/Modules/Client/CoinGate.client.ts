@@ -46,7 +46,7 @@ export class CoinGateClient extends AbstractService {
 
   protected async post(
     path: string,
-    body?: CreateOrderRefundBody | CreateOrderBody | CheckoutBody
+    body: CreateOrderRefundBody | CreateOrderBody | CheckoutBody
   ) {
     try {
       const { data } = await this.client.post(this.baseUrl + path, body, {
@@ -75,11 +75,11 @@ export class CoinGateClient extends AbstractService {
   private getDefaultHeaders(requestType: RequestTypeEnum, apiKey?: string) {
     let headers: HeadersType;
 
-    if (requestType === RequestTypeEnum.POST) {
-      headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      };
-    }
+    // if (requestType === RequestTypeEnum.POST) {
+    //   headers = {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   };
+    // }
 
     if (this.apiKey) {
       headers = {
