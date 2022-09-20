@@ -28,5 +28,5 @@ export type CheckoutBody = {
 };
 
 export type PaymentParamType = {
-  id: string;
+  id: number;
 };
