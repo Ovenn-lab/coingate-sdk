@@ -72,7 +72,7 @@ export class Client extends AbstractService {
     this.paymentGateway = new PaymentGatewayClient(apiBase);
   }
 
-  public testConnection(apiKey?: string | null) {
+  public testConnection(apiKey: string) {
     return this.public.test(apiKey);
   }
 
