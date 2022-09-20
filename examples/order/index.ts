@@ -1,6 +1,6 @@
 import { Client } from '../../src';
 
-const apiKey = '5fjBmoB-5zsNg6dzphye7k3_sUhr7vH-RYyXFn4u'; // Your sandbox api key
+const apiKey = ''; // Your sandbox api key
 
 const client = new Client(apiKey, true); // When second parameter is true, you'll get to play in sandbox mode
 
@@ -37,6 +37,7 @@ const trackStatus = async (orderId: number) => {
       ['expired', 'invalid', 'paid', 'canceled', 'refunded'].includes(status)
     ) {
       console.log(`Order ${orderId} status has changed to: ${status}`);
+      return clearInterval(interval);
     }
 
     console.log(`Your order ${orderId} status is ${status}`);
