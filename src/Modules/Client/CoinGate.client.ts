@@ -14,16 +14,32 @@ import {
 } from './types';
 
 export class CoinGateClient extends AbstractService {
+  /**
+   * @description Coingate-sdk version
+   */
   private VERSION = '1.0.0';
 
+  /**
+   * @description Axios instance
+   */
   private client: AxiosInstance;
 
+  /**
+   * @description api key for requests
+   */
   private apiKey: string | null;
 
+  /**
+   * @description base url
+   */
   protected baseUrl: string;
 
+  /**
+   * @description App information set by user
+   */
   protected appInfo: AppInfo | undefined;
 
+  /** @constructor */
   constructor(baseUrl: string) {
     super();
     this.baseUrl = baseUrl;
@@ -31,19 +47,37 @@ export class CoinGateClient extends AbstractService {
     this.apiKey = null;
   }
 
+  /**
+   *
+   * @param {string|null} apiKey
+   */
   public setApiKey(apiKey: string | null) {
     this.validateApiKey(apiKey);
     this.apiKey = apiKey;
   }
 
+  /**
+   *
+   * @param {BaseUrlEnum} baseUrl
+   */
   public setBaseUrl(baseUrl: BaseUrlEnum) {
     this.baseUrl = baseUrl;
   }
 
+  /**
+   *
+   * @param {AppInfo} appInfo
+   */
   public setAppInfo({ name, version }: AppInfo) {
     this.appInfo = { name, version };
   }
 
+  /**
+   *
+   * @param {string} path
+   * @param {CreateOrderRefundBody|CreateOrderBody|CheckoutBody} body
+   * @returns {Promise}
+   */
   protected async post(
     path: string,
     body: CreateOrderRefundBody | CreateOrderBody | CheckoutBody
@@ -59,6 +93,11 @@ export class CoinGateClient extends AbstractService {
     }
   }
 
+  /**
+   *
+   * @param {GetRequestType} params
+   * @returns {Promise}
+   */
   protected async get({ path, params, apiKey }: GetRequestType) {
     try {
       const { data } = await this.client.get(this.baseUrl + path, {
@@ -72,6 +111,12 @@ export class CoinGateClient extends AbstractService {
     }
   }
 
+  /**
+   *
+   * @param {RequestTypeEnum} requestType
+   * @param {string} apiKey
+   * @returns headers
+   */
   private getDefaultHeaders(requestType: RequestTypeEnum, apiKey?: string) {
     let headers: HeadersType;
 

@@ -171,7 +171,10 @@ const refund = await client.refunds.getRefunds();
 Current exchange rate for any two currencies, fiat or crypto. This endpoint is public, authentication is not required.
 
 ```ts
-const exchangeRate = await client.public.getExchangeRate('GBP', 'USD');
+const exchangeRate = await client.public.getExchangeRate({
+  from: 'GBP',
+  to: 'USD'
+});
 ```
 
 #### List Exchange Rates

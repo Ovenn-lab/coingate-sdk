@@ -10,6 +10,9 @@ import { BaseUrlEnum } from '#Modules/Client/types';
 import { AppInfo, ConfigType, EnviromentEnum } from './types';
 
 export class Client extends AbstractService {
+  /**
+   * @private {Array} client
+   */
   private clients: [PublicClient, PaymentGatewayClient, RefundsClient];
 
   private config: ConfigType;
@@ -22,6 +25,7 @@ export class Client extends AbstractService {
 
   public refunds!: RefundsClient;
 
+  /** @constructor */
   constructor(
     protected apiKey?: string | null,
     protected useSandboxEnv?: boolean | null
