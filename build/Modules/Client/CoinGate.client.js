@@ -30,7 +30,7 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
      * Set request timeout
      * @param {number} timeout
      */
-    setTimeout(timeout) {
+    setRequestTimeout(timeout) {
         this.timeout = timeout;
     }
     setApiKey(apiKey) {

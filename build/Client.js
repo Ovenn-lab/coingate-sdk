@@ -88,7 +88,7 @@ class Client extends _Modules_1.AbstractService {
      * @param {number} timeout
      */
     setRequestTimeout(timeout) {
-        this.clients.forEach((client) => client.setTimeout(timeout));
+        this.clients.forEach((client) => client.setRequestTimeout(timeout));
     }
 }
 exports.Client = Client;
