@@ -8,7 +8,11 @@ import {
   Order
 } from './types';
 
-export class orderService extends CoinGateClient {
+/**
+ * Class representing a Order Service
+ * @extends CoinGateClient
+ */
+export class OrderService extends CoinGateClient {
   /**
    * Create order at CoinGate and redirect shopper to invoice (payment_url).
    *

@@ -6,6 +6,10 @@ import {
   GetExchangeRateData
 } from './types';
 
+/**
+ * Class representing a Public Service
+ * @extends CoinGateClient
+ */
 export class PublicService extends CoinGateClient {
   /**
    * Current exchange rate for any two currencies, fiat or crypto.

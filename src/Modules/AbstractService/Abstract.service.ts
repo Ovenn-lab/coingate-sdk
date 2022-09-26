@@ -2,6 +2,9 @@ import { InvalidArgumentException } from '#Exception';
 
 import { BuildPathInput } from './types';
 
+/**
+ * Class representing Abstract service
+ */
 export class AbstractService {
   /**
    * Builds path with provided params

@@ -13,6 +13,10 @@ import {
   RequestTypeEnum
 } from './types';
 
+/**
+ * Class representing a CoinGate client
+ * @extends AbstractService
+ */
 export class CoinGateClient extends AbstractService {
   /**
    * @description Coingate-sdk version

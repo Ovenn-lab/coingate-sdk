@@ -1,5 +1,5 @@
 import {
-  orderService,
+  OrderService,
   PublicService,
   RefundsService,
   AbstractService
@@ -9,11 +9,15 @@ import { BaseUrlEnum } from '#Modules/Client/types';
 
 import { AppInfo, ConfigType, EnviromentEnum } from './types';
 
+/**
+ * Class representing a Client
+ * @extends AbstractService
+ */
 export class Client extends AbstractService {
   /** Services array
    * @private services
    */
-  private services: [PublicService, orderService, RefundsService];
+  private services: [PublicService, OrderService, RefundsService];
 
   /** App configuration
    * @private config
@@ -33,7 +37,7 @@ export class Client extends AbstractService {
   /**
    * @public order service
    */
-  public order!: orderService;
+  public order!: OrderService;
 
   /**
    * @public refunds service
@@ -106,7 +110,7 @@ export class Client extends AbstractService {
   private prepareModules(apiBase: string) {
     this.public = new PublicService(apiBase);
     this.refunds = new RefundsService(apiBase);
-    this.order = new orderService(apiBase);
+    this.order = new OrderService(apiBase);
   }
 
   /**

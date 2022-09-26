@@ -2,6 +2,10 @@ import { CoinGateClient } from '#Modules/Client/CoinGate.client';
 
 import { CreateOrderRefundBody } from './types';
 
+/**
+ * Class representing a Refunds Service
+ * @extends CoinGateClient
+ */
 export class RefundsService extends CoinGateClient {
   /**
    * Creates refund for provided order
