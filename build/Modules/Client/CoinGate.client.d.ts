@@ -7,9 +7,15 @@ export declare class CoinGateClient extends AbstractService {
     private VERSION;
     private client;
     private apiKey;
+    private timeout;
     protected baseUrl: string;
     protected appInfo: AppInfo | undefined;
     constructor(baseUrl: string);
+    /**
+     * Set request timeout
+     * @param {number} timeout
+     */
+    setTimeout(timeout: number): void;
     setApiKey(apiKey: string | null): void;
     setBaseUrl(baseUrl: BaseUrlEnum): void;
     setAppInfo({ name, version }: AppInfo): void;

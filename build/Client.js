@@ -83,5 +83,12 @@ class Client extends _Modules_1.AbstractService {
         this.appInfo = { name: name.trim(), version: version === null || version === void 0 ? void 0 : version.trim() };
         this.clients.forEach((client) => client.setAppInfo({ name, version }));
     }
+    /**
+     * Set request timeout
+     * @param {number} timeout
+     */
+    setRequestTimeout(timeout) {
+        this.clients.forEach((client) => client.setTimeout(timeout));
+    }
 }
 exports.Client = Client;

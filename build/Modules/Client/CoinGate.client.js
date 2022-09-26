@@ -21,9 +21,17 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
     constructor(baseUrl) {
         super();
         this.VERSION = '1.0.0';
+        this.timeout = 0; // Default timeout is 0
         this.baseUrl = baseUrl;
         this.client = axios_1.default.create();
         this.apiKey = null;
+    }
+    /**
+     * Set request timeout
+     * @param {number} timeout
+     */
+    setTimeout(timeout) {
+        this.timeout = timeout;
     }
     setApiKey(apiKey) {
         this.validateApiKey(apiKey);
@@ -39,7 +47,8 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { data } = yield this.client.post(this.baseUrl + path, body, {
-                    headers: this.getDefaultHeaders(types_1.RequestTypeEnum.POST)
+                    headers: this.getDefaultHeaders(types_1.RequestTypeEnum.POST),
+                    timeout: this.timeout
                 });
                 return data;
             }
@@ -53,7 +62,8 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
             try {
                 const { data } = yield this.client.get(this.baseUrl + path, {
                     params,
-                    headers: this.getDefaultHeaders(types_1.RequestTypeEnum.GET, apiKey)
+                    headers: this.getDefaultHeaders(types_1.RequestTypeEnum.GET, apiKey),
+                    timeout: this.timeout
                 });
                 return data;
             }

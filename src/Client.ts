@@ -126,4 +126,12 @@ export class Client extends AbstractService {
     this.appInfo = { name: name.trim(), version: version?.trim() };
     this.clients.forEach((client) => client.setAppInfo({ name, version }));
   }
+
+  /**
+   * Set request timeout
+   * @param {number} timeout
+   */
+  public setRequestTimeout(timeout: number) {
+    this.clients.forEach((client) => client.setTimeout(timeout));
+  }
 }

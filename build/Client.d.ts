@@ -21,4 +21,9 @@ export declare class Client extends AbstractService {
     setEnviroment(enviroment: EnviromentEnum | string): void;
     private setBaseUrlByEnv;
     setAppInfo({ name, version }: AppInfo): void;
+    /**
+     * Set request timeout
+     * @param {number} timeout
+     */
+    setRequestTimeout(timeout: number): void;
 }
