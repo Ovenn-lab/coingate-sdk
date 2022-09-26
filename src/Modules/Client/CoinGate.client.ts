@@ -37,7 +37,7 @@ export class CoinGateClient extends AbstractService {
    * Set request timeout
    * @param {number} timeout
    */
-  public setTimeout(timeout: number) {
+  public setRequestTimeout(timeout: number) {
     this.timeout = timeout;
   }
 

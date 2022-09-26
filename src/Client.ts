@@ -132,6 +132,6 @@ export class Client extends AbstractService {
    * @param {number} timeout
    */
   public setRequestTimeout(timeout: number) {
-    this.clients.forEach((client) => client.setTimeout(timeout));
+    this.clients.forEach((client) => client.setRequestTimeout(timeout));
   }
 }
