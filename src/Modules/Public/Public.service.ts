@@ -104,6 +104,7 @@ export class PublicService extends CoinGateClient {
   }
 
   /**
+   * List platforms
    * @param {boolean} enabled
    * @returns platforms
    */
@@ -115,6 +116,7 @@ export class PublicService extends CoinGateClient {
   }
 
   /**
+   * Test method
    * @param {string|null} apiKey
    * @returns boolean
    */
