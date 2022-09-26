@@ -30,3 +30,32 @@ export type CheckoutBody = {
 export type PaymentParamType = {
   id: number;
 };
+
+export type Order = {
+  id: number;
+  status: string;
+  do_not_convert?: boolean;
+  orderable_type: string;
+  orderable_id: number;
+  price_currency: string;
+  price_amount: string;
+  lightning_network?: boolean;
+  receive_currency: string;
+  receive_amount: string;
+  created_at: Date;
+  order_id: string;
+  payment_url: string;
+  underpaid_amount?: string;
+  overpaid_amount?: string;
+  is_refundable?: boolean;
+  refunds?: [];
+  voids?: [];
+  token?: string;
+};
+
+export interface Checkout extends Order {
+  pay_currency: string;
+  pay_amount: string;
+  expire_at: Date;
+  payment_address: string;
+}

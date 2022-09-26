@@ -1,4 +1,4 @@
-import { PaymentParamType } from '#Modules/PaymentGateway/types';
+import { PaymentParamType } from '#Modules/Order/types';
 import {
   GetCurrenciesData,
   GetExchangeRateData,

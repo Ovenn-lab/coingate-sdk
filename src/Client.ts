@@ -1,7 +1,7 @@
 import {
-  PaymentGatewayClient,
-  PublicClient,
-  RefundsClient,
+  orderService,
+  PublicService,
+  RefundsService,
   AbstractService
 } from '#Modules';
 import { InvalidArgumentException } from '#Exception';
@@ -10,20 +10,35 @@ import { BaseUrlEnum } from '#Modules/Client/types';
 import { AppInfo, ConfigType, EnviromentEnum } from './types';
 
 export class Client extends AbstractService {
-  /**
-   * @private {Array} client
+  /** Services array
+   * @private services
    */
-  private clients: [PublicClient, PaymentGatewayClient, RefundsClient];
+  private services: [PublicService, orderService, RefundsService];
 
+  /** App configuration
+   * @private config
+   */
   private config: ConfigType;
 
+  /** App information set by user
+   * @private app information
+   */
   private appInfo: AppInfo | undefined;
 
-  public public!: PublicClient;
+  /**
+   * @public public service
+   */
+  public public!: PublicService;
 
-  public paymentGateway!: PaymentGatewayClient;
+  /**
+   * @public order service
+   */
+  public order!: orderService;
 
-  public refunds!: RefundsClient;
+  /**
+   * @public refunds service
+   */
+  public refunds!: RefundsService;
 
   /** @constructor */
   constructor(
@@ -44,22 +59,36 @@ export class Client extends AbstractService {
     const { apiBase } = this.config;
 
     this.prepareModules(apiBase);
-    this.clients = [this.public, this.paymentGateway, this.refunds];
+    this.services = [this.public, this.order, this.refunds];
     this.setApiKey(this.config.apiKey);
   }
 
+  /**
+   * @returns {AppInfo|null} app information
+   */
   public getAppInfo() {
     return this.appInfo;
   }
 
+  /**
+   * @returns {string|null} api key or null
+   */
   public getApiKey() {
     return this.config.apiKey;
   }
 
+  /**
+   * @returns {EnviromentEnum} enviroment
+   */
   public getEnviroment() {
     return this.config.enviroment;
   }
 
+  /**
+   *
+   * @param {boolean|null} useSandboxEnv
+   * @returns {ConfigType} config
+   */
   private getDefaultConfig(useSandboxEnv?: boolean | null) {
     return {
       apiKey: null,
@@ -70,16 +99,29 @@ export class Client extends AbstractService {
     };
   }
 
+  /**
+   * Prepares all modules
+   * @param {string} apiBase
+   */
   private prepareModules(apiBase: string) {
-    this.public = new PublicClient(apiBase);
-    this.refunds = new RefundsClient(apiBase);
-    this.paymentGateway = new PaymentGatewayClient(apiBase);
+    this.public = new PublicService(apiBase);
+    this.refunds = new RefundsService(apiBase);
+    this.order = new orderService(apiBase);
   }
 
+  /**
+   * Tests api connection
+   * @param {string} apiKey
+   * @returns {boolean} true / false
+   */
   public testConnection(apiKey: string) {
     return this.public.test(apiKey);
   }
 
+  /**
+   * Config validator
+   * @param {ConfigType} config
+   */
   private validateConfig(config?: ConfigType) {
     const { apiBase, apiKey, enviroment } = config || this.config;
 
@@ -98,14 +140,22 @@ export class Client extends AbstractService {
     }
   }
 
+  /**
+   *
+   * @param {string|null} apiKey
+   */
   public setApiKey(apiKey: string | null) {
     const config = { ...this.config, apiKey };
     this.validateConfig(config);
     this.config = config;
 
-    this.clients.forEach((client) => client.setApiKey(this.config.apiKey));
+    this.services.forEach((client) => client.setApiKey(this.config.apiKey));
   }
 
+  /**
+   *
+   * @param {EnviromentEnum|string} enviroment
+   */
   public setEnviroment(enviroment: EnviromentEnum | string) {
     const config = { ...this.config, enviroment: enviroment as EnviromentEnum };
 
@@ -114,8 +164,12 @@ export class Client extends AbstractService {
     this.setBaseUrlByEnv(this.config.enviroment);
   }
 
+  /**
+   *
+   * @param {EnviromentEnum} enviroment
+   */
   private setBaseUrlByEnv(enviroment: EnviromentEnum) {
-    this.clients.forEach((client) => {
+    this.services.forEach((client) => {
       switch (enviroment) {
         case EnviromentEnum.SANDBOX:
           return client.setBaseUrl(BaseUrlEnum.SANDBOX_DEFAULT_API_BASE);
@@ -126,8 +180,12 @@ export class Client extends AbstractService {
     });
   }
 
+  /**
+   *
+   * @param {AppInfo} appInfo
+   */
   public setAppInfo({ name, version }: AppInfo) {
     this.appInfo = { name: name.trim(), version: version?.trim() };
-    this.clients.forEach((client) => client.setAppInfo({ name, version }));
+    this.services.forEach((client) => client.setAppInfo({ name, version }));
   }
 }

@@ -6,10 +6,11 @@ import {
   GetExchangeRateData
 } from './types';
 
-export class PublicClient extends CoinGateClient {
+export class PublicService extends CoinGateClient {
   /**
    * Current exchange rate for any two currencies, fiat or crypto.
    * @param {Object} params two currencies which exchange rate you want to get. Example: { from: 'GBP', to 'EUR' }
+   * @returns exchange rate
    */
   public getExchangeRate(params: GetExchangeRateData) {
     const path = this.buildPath({
@@ -22,6 +23,7 @@ export class PublicClient extends CoinGateClient {
 
   /**
    * Current CoinGate exchange rates for Merchants and Traders.
+   * @returns exchange rates
    */
   public listExchangeRates() {
     return this.get({ path: '/v2/rates/' });
@@ -29,6 +31,7 @@ export class PublicClient extends CoinGateClient {
 
   /**
    * A health check endpoint for CoinGate API.
+   * @returns pong!
    */
   public ping() {
     return this.get({ path: '/v2/ping/' });
@@ -37,6 +40,7 @@ export class PublicClient extends CoinGateClient {
   /**
    * Get IP addresses of CoinGate servers
    * @param {string} separator
+   * @returns ip addresses
    */
   public ipAddresses(separator?: string) {
     return this.get({ path: '/v2/ips-v4/', params: { separator } });
@@ -50,6 +54,7 @@ export class PublicClient extends CoinGateClient {
    * @param {boolean} params.merchant_pay
    * @param {boolean} params.merchant_receive
    * @param {CurrencyKindEnum} params.kind
+   * @returns currencies
    */
   public getCurrencies(params?: GetCurrenciesData) {
     return this.get({
@@ -59,7 +64,7 @@ export class PublicClient extends CoinGateClient {
   }
 
   /**
-   * Get checkout currencies
+   * @returns checkout currencies
    */
   public getCheckoutCurrencies() {
     return this.getCurrencies({
@@ -70,8 +75,8 @@ export class PublicClient extends CoinGateClient {
   }
 
   /**
-   * Get merchant pay currencies
    * @param {CurrencyKindEnum} kind
+   * @returns merchant pay currencies
    */
   public getMerchantPayCurrencies(kind?: CurrencyKindEnum) {
     return this.getCurrencies({
@@ -82,8 +87,8 @@ export class PublicClient extends CoinGateClient {
   }
 
   /**
-   * Get merchant payout currencies
    * @param {CurrencyKindEnum} kind
+   * @returns merchant payout currencies
    */
   public getMerchantPayoutCurrencies(kind?: CurrencyKindEnum) {
     return this.getCurrencies({
@@ -95,8 +100,8 @@ export class PublicClient extends CoinGateClient {
   }
 
   /**
-   * Ge
    * @param {boolean} enabled
+   * @returns platforms
    */
   public getPlatforms(enabled?: boolean) {
     return this.get({
@@ -107,7 +112,7 @@ export class PublicClient extends CoinGateClient {
 
   /**
    * @param {string|null} apiKey
-   * @return bool
+   * @returns boolean
    */
   public async test(apiKey: string): Promise<boolean> {
     try {

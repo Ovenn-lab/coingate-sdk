@@ -2,8 +2,8 @@ import axios, { AxiosError, AxiosInstance } from 'axios';
 
 import { AbstractService } from '#Modules/AbstractService/Abstract.service';
 import { handleErrorResponse } from '../../Exception';
-import { CreateOrderRefundBody } from '#/Modules/Refunds/types';
-import { CheckoutBody, CreateOrderBody } from '#/Modules/PaymentGateway/types';
+import { CreateOrderRefundBody } from '#Modules/Refunds/types';
+import { CheckoutBody, CreateOrderBody } from '#Modules/Order/types';
 import { AppInfo } from '#types';
 
 import {

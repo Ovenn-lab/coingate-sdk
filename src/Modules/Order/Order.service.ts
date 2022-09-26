@@ -1,24 +1,30 @@
 import { CoinGateClient } from '#Modules/Client/CoinGate.client';
 
-import { CheckoutBody, CreateOrderBody, ListOrdersData } from './types';
+import {
+  Checkout,
+  CheckoutBody,
+  CreateOrderBody,
+  ListOrdersData,
+  Order
+} from './types';
 
-export class PaymentGatewayClient extends CoinGateClient {
+export class orderService extends CoinGateClient {
   /**
    * Create order at CoinGate and redirect shopper to invoice (payment_url).
    *
    * @param  {CreateOrderBody} body
-   * @returns order
+   * @returns {Order} order
    */
-  public async createOrder(body: CreateOrderBody) {
+  public async createOrder(body: CreateOrderBody): Promise<Order> {
     return this.post('/v2/orders/', body);
   }
 
   /**
    * @param {number} id
    * @param  {CheckoutBody} body
-   * @returns order
+   * @returns {Checkout} checkout
    */
-  public checkout(id: number, body: CheckoutBody) {
+  public checkout(id: number, body: CheckoutBody): Promise<Checkout> {
     const path = this.buildPath({
       path: '/v2/orders/:id/checkout',
       params: { id }
@@ -31,9 +37,9 @@ export class PaymentGatewayClient extends CoinGateClient {
    * Retrieving information of a specific order by CoinGate order ID.
    *
    * @param {number} id
-   *  @returns
+   * @returns {Order} order
    */
-  public getOrder(id: number) {
+  public getOrder(id: number): Promise<Order> {
     const path = this.buildPath({
       path: '/v2/orders/:id/',
       params: { id }
@@ -46,8 +52,9 @@ export class PaymentGatewayClient extends CoinGateClient {
    * Retrieving information of all placed orders.
    *
    * @param {ListOrdersData} params
+   * @returns {Order[]} order array
    */
-  public async listOrders(params?: ListOrdersData) {
+  public async listOrders(params?: ListOrdersData): Promise<Order[]> {
     return this.get({ path: '/v2/orders/', params });
   }
 }

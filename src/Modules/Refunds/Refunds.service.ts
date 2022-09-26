@@ -2,12 +2,13 @@ import { CoinGateClient } from '#Modules/Client/CoinGate.client';
 
 import { CreateOrderRefundBody } from './types';
 
-export class RefundsClient extends CoinGateClient {
+export class RefundsService extends CoinGateClient {
   /**
    * Creates refund for provided order
    *
    * @param {number} order_id
    * @param {CreateOrderRefundBody} body
+   * @returns refund
    */
   public createOrderRefund(order_id: number, body: CreateOrderRefundBody) {
     const path = this.buildPath({
@@ -23,6 +24,7 @@ export class RefundsClient extends CoinGateClient {
    *
    * @param {number} order_id
    * @param {number} id
+   * @returns refund
    */
   public getOrderRefund(order_id: number, id: number) {
     const path = this.buildPath({
@@ -37,6 +39,7 @@ export class RefundsClient extends CoinGateClient {
    * Retrieving all refunds of a specific order by CoinGate order ID.
    *
    * @param {number} order_id
+   * @returns refunds
    */
   public getOrderRefunds(order_id: number) {
     const path = this.buildPath({
