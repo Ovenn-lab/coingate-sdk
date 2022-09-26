@@ -9,9 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.orderService = void 0;
+exports.OrderService = void 0;
 const CoinGate_client_1 = require("../../Modules/Client/CoinGate.client");
-class orderService extends CoinGate_client_1.CoinGateClient {
+/**
+ * Class representing a Order Service
+ * @extends CoinGateClient
+ */
+class OrderService extends CoinGate_client_1.CoinGateClient {
     /**
      * Create order at CoinGate and redirect shopper to invoice (payment_url).
      *
@@ -60,4 +64,4 @@ class orderService extends CoinGate_client_1.CoinGateClient {
         });
     }
 }
-exports.orderService = orderService;
+exports.OrderService = OrderService;

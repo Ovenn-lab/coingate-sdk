@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AbstractService = void 0;
 const _Exception_1 = require("../../Exception");
+/**
+ * Class representing Abstract service
+ */
 class AbstractService {
     /**
      * Builds path with provided params

@@ -17,6 +17,10 @@ const axios_1 = __importDefault(require("axios"));
 const Abstract_service_1 = require("../../Modules/AbstractService/Abstract.service");
 const Exception_1 = require("../../Exception");
 const types_1 = require("./types");
+/**
+ * Class representing a CoinGate client
+ * @extends AbstractService
+ */
 class CoinGateClient extends Abstract_service_1.AbstractService {
     /** @constructor */
     constructor(baseUrl) {

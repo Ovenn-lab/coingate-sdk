@@ -12,6 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PublicService = void 0;
 const CoinGate_client_1 = require("../../Modules/Client/CoinGate.client");
 const types_1 = require("./types");
+/**
+ * Class representing a Public Service
+ * @extends CoinGateClient
+ */
 class PublicService extends CoinGate_client_1.CoinGateClient {
     /**
      * Current exchange rate for any two currencies, fiat or crypto.

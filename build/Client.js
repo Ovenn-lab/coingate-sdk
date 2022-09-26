@@ -5,6 +5,10 @@ const _Modules_1 = require("./Modules");
 const _Exception_1 = require("./Exception");
 const types_1 = require("./Modules/Client/types");
 const types_2 = require("./types");
+/**
+ * Class representing a Client
+ * @extends AbstractService
+ */
 class Client extends _Modules_1.AbstractService {
     /** @constructor */
     constructor(apiKey, useSandboxEnv) {
@@ -60,7 +64,7 @@ class Client extends _Modules_1.AbstractService {
     prepareModules(apiBase) {
         this.public = new _Modules_1.PublicService(apiBase);
         this.refunds = new _Modules_1.RefundsService(apiBase);
-        this.order = new _Modules_1.orderService(apiBase);
+        this.order = new _Modules_1.OrderService(apiBase);
     }
     /**
      * Tests api connection

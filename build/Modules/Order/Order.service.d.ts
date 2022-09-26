@@ -1,6 +1,10 @@
 import { CoinGateClient } from '../../Modules/Client/CoinGate.client';
 import { Checkout, CheckoutBody, CreateOrderBody, ListOrdersData, Order } from './types';
-export declare class orderService extends CoinGateClient {
+/**
+ * Class representing a Order Service
+ * @extends CoinGateClient
+ */
+export declare class OrderService extends CoinGateClient {
     /**
      * Create order at CoinGate and redirect shopper to invoice (payment_url).
      *

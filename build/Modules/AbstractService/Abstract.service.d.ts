@@ -1,4 +1,7 @@
 import { BuildPathInput } from './types';
+/**
+ * Class representing Abstract service
+ */
 export declare class AbstractService {
     /**
      * Builds path with provided params

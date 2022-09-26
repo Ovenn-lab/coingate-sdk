@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RefundsService = void 0;
 const CoinGate_client_1 = require("../../Modules/Client/CoinGate.client");
+/**
+ * Class representing a Refunds Service
+ * @extends CoinGateClient
+ */
 class RefundsService extends CoinGate_client_1.CoinGateClient {
     /**
      * Creates refund for provided order

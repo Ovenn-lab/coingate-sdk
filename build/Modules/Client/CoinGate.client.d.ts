@@ -3,6 +3,10 @@ import { CreateOrderRefundBody } from '../../Modules/Refunds/types';
 import { CheckoutBody, CreateOrderBody } from '../../Modules/Order/types';
 import { AppInfo } from '../../types';
 import { BaseUrlEnum, GetRequestType } from './types';
+/**
+ * Class representing a CoinGate client
+ * @extends AbstractService
+ */
 export declare class CoinGateClient extends AbstractService {
     /**
      * @description Coingate-sdk version

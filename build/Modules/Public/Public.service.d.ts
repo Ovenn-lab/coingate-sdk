@@ -1,5 +1,9 @@
 import { CoinGateClient } from '../../Modules/Client/CoinGate.client';
 import { CurrencyKindEnum, GetCurrenciesData, GetExchangeRateData } from './types';
+/**
+ * Class representing a Public Service
+ * @extends CoinGateClient
+ */
 export declare class PublicService extends CoinGateClient {
     /**
      * Current exchange rate for any two currencies, fiat or crypto.

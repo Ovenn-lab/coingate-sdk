@@ -1,5 +1,9 @@
-import { orderService, PublicService, RefundsService, AbstractService } from './Modules';
+import { OrderService, PublicService, RefundsService, AbstractService } from './Modules';
 import { AppInfo, EnviromentEnum } from './types';
+/**
+ * Class representing a Client
+ * @extends AbstractService
+ */
 export declare class Client extends AbstractService {
     protected apiKey?: string | null;
     protected useSandboxEnv?: boolean | null;
@@ -22,7 +26,7 @@ export declare class Client extends AbstractService {
     /**
      * @public order service
      */
-    order: orderService;
+    order: OrderService;
     /**
      * @public refunds service
      */
