@@ -3,6 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AbstractService = void 0;
 const _Exception_1 = require("../../Exception");
 class AbstractService {
+    /**
+     * Builds path with provided params
+     * @param {BuildPathInput} param
+     * @returns {string} path
+     */
     buildPath({ path, params }) {
         let newPath = path;
         if (params) {
@@ -12,6 +17,10 @@ class AbstractService {
         }
         return newPath;
     }
+    /**
+     * Api key validator
+     * @param {string|null} apiKey
+     */
     validateApiKey(apiKey) {
         if (apiKey !== null) {
             if (typeof apiKey !== 'string') {

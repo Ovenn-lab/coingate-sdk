@@ -9,10 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PublicClient = void 0;
+exports.PublicService = void 0;
 const CoinGate_client_1 = require("../../Modules/Client/CoinGate.client");
 const types_1 = require("./types");
-class PublicClient extends CoinGate_client_1.CoinGateClient {
+class PublicService extends CoinGate_client_1.CoinGateClient {
+    /**
+     * Current exchange rate for any two currencies, fiat or crypto.
+     * @param {Object} params two currencies which exchange rate you want to get. Example: { from: 'GBP', to 'EUR' }
+     * @returns exchange rate
+     */
     getExchangeRate(params) {
         const path = this.buildPath({
             path: '/v2/rates/merchant/:from/:to',
@@ -20,21 +25,47 @@ class PublicClient extends CoinGate_client_1.CoinGateClient {
         });
         return this.get({ path });
     }
+    /**
+     * Current CoinGate exchange rates for Merchants and Traders.
+     * @returns exchange rates
+     */
     listExchangeRates() {
         return this.get({ path: '/v2/rates/' });
     }
+    /**
+     * A health check endpoint for CoinGate API.
+     * @returns pong!
+     */
     ping() {
         return this.get({ path: '/v2/ping/' });
     }
+    /**
+     * Get IP addresses of CoinGate servers
+     * @param {string} separator
+     * @returns ip addresses
+     */
     ipAddresses(separator) {
         return this.get({ path: '/v2/ips-v4/', params: { separator } });
     }
+    /**
+     * Get Currencies
+     * @param {Object} params
+     * @param {boolean} params.native
+     * @param {boolean} params.enabled
+     * @param {boolean} params.merchant_pay
+     * @param {boolean} params.merchant_receive
+     * @param {CurrencyKindEnum} params.kind
+     * @returns currencies
+     */
     getCurrencies(params) {
         return this.get({
             path: '/v2/currencies/',
             params
         });
     }
+    /**
+     * @returns checkout currencies
+     */
     getCheckoutCurrencies() {
         return this.getCurrencies({
             kind: types_1.CurrencyKindEnum.CRYPTO,
@@ -42,6 +73,10 @@ class PublicClient extends CoinGate_client_1.CoinGateClient {
             merchant_pay: true
         });
     }
+    /**
+     * @param {CurrencyKindEnum} kind
+     * @returns merchant pay currencies
+     */
     getMerchantPayCurrencies(kind) {
         return this.getCurrencies({
             kind,
@@ -49,6 +84,10 @@ class PublicClient extends CoinGate_client_1.CoinGateClient {
             merchant_pay: true
         });
     }
+    /**
+     * @param {CurrencyKindEnum} kind
+     * @returns merchant payout currencies
+     */
     getMerchantPayoutCurrencies(kind) {
         return this.getCurrencies({
             kind,
@@ -57,12 +96,20 @@ class PublicClient extends CoinGate_client_1.CoinGateClient {
             merchant_receive: true
         });
     }
+    /**
+     * @param {boolean} enabled
+     * @returns platforms
+     */
     getPlatforms(enabled) {
         return this.get({
             path: '/v2/currencies/',
             params: { enabled: enabled ? 'true' : 'false' }
         });
     }
+    /**
+     * @param {string|null} apiKey
+     * @returns boolean
+     */
     test(apiKey) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -75,4 +122,4 @@ class PublicClient extends CoinGate_client_1.CoinGateClient {
         });
     }
 }
-exports.PublicClient = PublicClient;
+exports.PublicService = PublicService;
