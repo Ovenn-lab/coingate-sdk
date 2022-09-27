@@ -46,7 +46,6 @@ export declare class Client extends AbstractService {
      */
     getEnviroment(): EnviromentEnum;
     /**
-     *
      * @param {boolean|null} useSandboxEnv
      * @returns {ConfigType} config
      */
@@ -59,7 +58,7 @@ export declare class Client extends AbstractService {
     /**
      * Tests api connection
      * @param {string} apiKey
-     * @returns {boolean} true / false
+     * @returns {boolean} boolean
      */
     testConnection(apiKey: string): Promise<boolean>;
     /**
@@ -68,7 +67,6 @@ export declare class Client extends AbstractService {
      */
     private validateConfig;
     /**
-     *
      * @param {string|null} apiKey
      */
     setApiKey(apiKey: string | null): void;
@@ -78,13 +76,16 @@ export declare class Client extends AbstractService {
      */
     setEnviroment(enviroment: EnviromentEnum | string): void;
     /**
-     *
      * @param {EnviromentEnum} enviroment
      */
     private setBaseUrlByEnv;
     /**
-     *
      * @param {AppInfo} appInfo
      */
     setAppInfo({ name, version }: AppInfo): void;
+    /**
+     * Set request timeout
+     * @param {number} timeout
+     */
+    setRequestTimeout(timeout: number): void;
 }

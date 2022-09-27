@@ -14,8 +14,15 @@ import { InternalServerError } from './InternalServerError';
 import { RateLimitException } from './RateLimitException';
 import { UnknownApiErrorException } from './UnknownApiErrorException';
 import { ErrorReasonEnum, HttpStatusEnum } from './types';
+import { RequestTimeoutException } from './RequestTimeoutException';
 
-export const handleErrorResponse = ({ response }: AxiosError) => {
+export const handleErrorResponse = (error: AxiosError) => {
+  if (error.code === 'ECONNABORTED') {
+    throw new RequestTimeoutException('Request timed out.');
+  }
+
+  const { response } = error;
+
   if (response) {
     const {
       status,

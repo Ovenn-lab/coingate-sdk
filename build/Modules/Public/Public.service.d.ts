@@ -7,7 +7,7 @@ import { CurrencyKindEnum, GetCurrenciesData, GetExchangeRateData } from './type
 export declare class PublicService extends CoinGateClient {
     /**
      * Current exchange rate for any two currencies, fiat or crypto.
-     * @param {Object} params two currencies which exchange rate you want to get. Example: { from: 'GBP', to 'EUR' }
+     * @param {Object} params two currencies which exchange rate you want to get. Example: { from: 'GBP', to: 'EUR' }
      * @returns exchange rate
      */
     getExchangeRate(params: GetExchangeRateData): Promise<any>;
@@ -53,11 +53,13 @@ export declare class PublicService extends CoinGateClient {
      */
     getMerchantPayoutCurrencies(kind?: CurrencyKindEnum): Promise<any>;
     /**
+     * List platforms
      * @param {boolean} enabled
      * @returns platforms
      */
     getPlatforms(enabled?: boolean): Promise<any>;
     /**
+     * Test method
      * @param {string|null} apiKey
      * @returns boolean
      */

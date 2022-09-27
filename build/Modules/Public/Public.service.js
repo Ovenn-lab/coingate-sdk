@@ -19,7 +19,7 @@ const types_1 = require("./types");
 class PublicService extends CoinGate_client_1.CoinGateClient {
     /**
      * Current exchange rate for any two currencies, fiat or crypto.
-     * @param {Object} params two currencies which exchange rate you want to get. Example: { from: 'GBP', to 'EUR' }
+     * @param {Object} params two currencies which exchange rate you want to get. Example: { from: 'GBP', to: 'EUR' }
      * @returns exchange rate
      */
     getExchangeRate(params) {
@@ -101,6 +101,7 @@ class PublicService extends CoinGate_client_1.CoinGateClient {
         });
     }
     /**
+     * List platforms
      * @param {boolean} enabled
      * @returns platforms
      */
@@ -111,6 +112,7 @@ class PublicService extends CoinGate_client_1.CoinGateClient {
         });
     }
     /**
+     * Test method
      * @param {string|null} apiKey
      * @returns boolean
      */

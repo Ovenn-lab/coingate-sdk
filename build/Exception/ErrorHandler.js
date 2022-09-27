@@ -6,7 +6,12 @@ const InternalServerError_1 = require("./InternalServerError");
 const RateLimitException_1 = require("./RateLimitException");
 const UnknownApiErrorException_1 = require("./UnknownApiErrorException");
 const types_1 = require("./types");
-const handleErrorResponse = ({ response }) => {
+const RequestTimeoutException_1 = require("./RequestTimeoutException");
+const handleErrorResponse = (error) => {
+    if (error.code === 'ECONNABORTED') {
+        throw new RequestTimeoutException_1.RequestTimeoutException('Request timed out.');
+    }
+    const { response } = error;
     if (response) {
         const { status, data: { reason } } = response;
         switch (status) {

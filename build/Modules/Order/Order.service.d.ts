@@ -13,6 +13,7 @@ export declare class OrderService extends CoinGateClient {
      */
     createOrder(body: CreateOrderBody): Promise<Order>;
     /**
+     * Placing created order with pre-selected payment currency (BTC, LTC, ETH, etc).
      * @param {number} id
      * @param  {CheckoutBody} body
      * @returns {Checkout} checkout

@@ -44,7 +44,6 @@ class Client extends _Modules_1.AbstractService {
         return this.config.enviroment;
     }
     /**
-     *
      * @param {boolean|null} useSandboxEnv
      * @returns {ConfigType} config
      */
@@ -69,7 +68,7 @@ class Client extends _Modules_1.AbstractService {
     /**
      * Tests api connection
      * @param {string} apiKey
-     * @returns {boolean} true / false
+     * @returns {boolean} boolean
      */
     testConnection(apiKey) {
         return this.public.test(apiKey);
@@ -89,7 +88,6 @@ class Client extends _Modules_1.AbstractService {
         }
     }
     /**
-     *
      * @param {string|null} apiKey
      */
     setApiKey(apiKey) {
@@ -109,7 +107,6 @@ class Client extends _Modules_1.AbstractService {
         this.setBaseUrlByEnv(this.config.enviroment);
     }
     /**
-     *
      * @param {EnviromentEnum} enviroment
      */
     setBaseUrlByEnv(enviroment) {
@@ -124,12 +121,18 @@ class Client extends _Modules_1.AbstractService {
         });
     }
     /**
-     *
      * @param {AppInfo} appInfo
      */
     setAppInfo({ name, version }) {
         this.appInfo = { name: name.trim(), version: version === null || version === void 0 ? void 0 : version.trim() };
         this.services.forEach((client) => client.setAppInfo({ name, version }));
+    }
+    /**
+     * Set request timeout
+     * @param {number} timeout
+     */
+    setRequestTimeout(timeout) {
+        this.services.forEach((client) => client.setRequestTimeout(timeout));
     }
 }
 exports.Client = Client;

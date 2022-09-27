@@ -28,6 +28,7 @@ class OrderService extends CoinGate_client_1.CoinGateClient {
         });
     }
     /**
+     * Placing created order with pre-selected payment currency (BTC, LTC, ETH, etc).
      * @param {number} id
      * @param  {CheckoutBody} body
      * @returns {Checkout} checkout

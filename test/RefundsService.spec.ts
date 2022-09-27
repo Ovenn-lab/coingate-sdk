@@ -1,22 +1,22 @@
-import { RefundsClient } from '../src/Modules';
+import { RefundsService } from '../src/Modules';
 import { mockOrderRefundData, mockRefundsData } from './Mocks';
 
-describe('RefundsClient', () => {
-  let refundsClient;
+describe('refundsService', () => {
+  let refundsService;
   let getSpy;
   let postSpy;
 
   beforeEach(() => {
-    refundsClient = new RefundsClient();
-    getSpy = jest.spyOn(refundsClient, 'get');
-    postSpy = jest.spyOn(refundsClient, 'post');
+    refundsService = new RefundsService();
+    getSpy = jest.spyOn(refundsService, 'get');
+    postSpy = jest.spyOn(refundsService, 'post');
   });
 
   describe('createOrderRefund method', () => {
     test('should build path and call post with it', () => {
       const { order_id } = mockRefundsData;
-      const buildPathSpy = jest.spyOn(refundsClient, 'buildPath');
-      const result = refundsClient.createOrderRefund(
+      const buildPathSpy = jest.spyOn(refundsService, 'buildPath');
+      const result = refundsService.createOrderRefund(
         order_id,
         mockOrderRefundData
       );
@@ -38,8 +38,8 @@ describe('RefundsClient', () => {
   describe('getOrderRefund method', () => {
     test('should build path and call get method with it', () => {
       const { order_id, id } = mockRefundsData;
-      const buildPathSpy = jest.spyOn(refundsClient, 'buildPath');
-      const result = refundsClient.getOrderRefund(order_id, id);
+      const buildPathSpy = jest.spyOn(refundsService, 'buildPath');
+      const result = refundsService.getOrderRefund(order_id, id);
 
       expect(result).toBeDefined();
       expect(buildPathSpy).toBeCalledTimes(1);
@@ -53,8 +53,8 @@ describe('RefundsClient', () => {
   describe('getOrderRefunds method', () => {
     test('should build path and call get method', () => {
       const { order_id } = mockRefundsData;
-      const buildPathSpy = jest.spyOn(refundsClient, 'buildPath');
-      const result = refundsClient.getOrderRefunds(order_id);
+      const buildPathSpy = jest.spyOn(refundsService, 'buildPath');
+      const result = refundsService.getOrderRefunds(order_id);
 
       expect(result).toBeDefined();
       expect(buildPathSpy).toBeCalledTimes(1);
@@ -69,7 +69,7 @@ describe('RefundsClient', () => {
 
   describe('getRefunds method', () => {
     test('should call get method with path /v2/refunds', () => {
-      const result = refundsClient.getRefunds();
+      const result = refundsService.getRefunds();
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);

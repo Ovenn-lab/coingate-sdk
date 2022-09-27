@@ -89,7 +89,6 @@ export class Client extends AbstractService {
   }
 
   /**
-   *
    * @param {boolean|null} useSandboxEnv
    * @returns {ConfigType} config
    */
@@ -116,7 +115,7 @@ export class Client extends AbstractService {
   /**
    * Tests api connection
    * @param {string} apiKey
-   * @returns {boolean} true / false
+   * @returns {boolean} boolean
    */
   public testConnection(apiKey: string) {
     return this.public.test(apiKey);
@@ -145,7 +144,6 @@ export class Client extends AbstractService {
   }
 
   /**
-   *
    * @param {string|null} apiKey
    */
   public setApiKey(apiKey: string | null) {
@@ -169,7 +167,6 @@ export class Client extends AbstractService {
   }
 
   /**
-   *
    * @param {EnviromentEnum} enviroment
    */
   private setBaseUrlByEnv(enviroment: EnviromentEnum) {
@@ -185,11 +182,18 @@ export class Client extends AbstractService {
   }
 
   /**
-   *
    * @param {AppInfo} appInfo
    */
   public setAppInfo({ name, version }: AppInfo) {
     this.appInfo = { name: name.trim(), version: version?.trim() };
     this.services.forEach((client) => client.setAppInfo({ name, version }));
+  }
+
+  /**
+   * Set request timeout
+   * @param {number} timeout
+   */
+  public setRequestTimeout(timeout: number) {
+    this.services.forEach((client) => client.setRequestTimeout(timeout));
   }
 }
