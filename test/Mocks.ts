@@ -1,11 +1,11 @@
 import faker from 'faker';
 
-import { EnviromentEnum } from '../src/types';
+import { EnvironmentEnum } from '../src/types';
 import { BaseUrlEnum } from '../src/Modules/Client/types';
 import { CurrencyKindEnum } from '../src/Modules/Public/types';
 
 export const mockConfig = {
-  enviroment: EnviromentEnum.SANDBOX,
+  environment: EnvironmentEnum.SANDBOX,
   apiKey: faker.datatype.hexaDecimal(30),
   apiBase: BaseUrlEnum.SANDBOX_DEFAULT_API_BASE
 };
@@ -15,7 +15,7 @@ export const mockWrongApiKeys = {
   keyEmpty: ''
 };
 
-export const mockWrongEnviroment = 'local';
+export const mockWrongEnvironment = 'local';
 
 export const mockExchangeRateData = { from: 'USD', to: 'EUR' };
 
