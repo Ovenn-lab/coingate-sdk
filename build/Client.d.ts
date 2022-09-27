@@ -1,5 +1,5 @@
 import { OrderService, PublicService, RefundsService, AbstractService } from './Modules';
-import { AppInfo, EnviromentEnum } from './types';
+import { AppInfo, EnvironmentEnum } from './types';
 /**
  * Class representing a Client
  * @extends AbstractService
@@ -42,9 +42,9 @@ export declare class Client extends AbstractService {
      */
     getApiKey(): string;
     /**
-     * @returns {EnviromentEnum} enviroment
+     * @returns {EnvironmentEnum} environment
      */
-    getEnviroment(): EnviromentEnum;
+    getEnvironment(): EnvironmentEnum;
     /**
      * @param {boolean|null} useSandboxEnv
      * @returns {ConfigType} config
@@ -72,11 +72,11 @@ export declare class Client extends AbstractService {
     setApiKey(apiKey: string | null): void;
     /**
      *
-     * @param {EnviromentEnum|string} enviroment
+     * @param {EnvironmentEnum|string} environment
      */
-    setEnviroment(enviroment: EnviromentEnum | string): void;
+    setEnvironment(environment: EnvironmentEnum | string): void;
     /**
-     * @param {EnviromentEnum} enviroment
+     * @param {EnvironmentEnum} environment
      */
     private setBaseUrlByEnv;
     /**

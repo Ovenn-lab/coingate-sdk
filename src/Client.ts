@@ -7,7 +7,7 @@ import {
 import { InvalidArgumentException } from '#Exception';
 import { BaseUrlEnum } from '#Modules/Client/types';
 
-import { AppInfo, ConfigType, EnviromentEnum } from './types';
+import { AppInfo, ConfigType, EnvironmentEnum } from './types';
 
 /**
  * Class representing a Client
@@ -54,7 +54,9 @@ export class Client extends AbstractService {
       ...this.getDefaultConfig(useSandboxEnv),
       ...{
         apiKey: apiKey || null,
-        enviroment: useSandboxEnv ? EnviromentEnum.SANDBOX : EnviromentEnum.LIVE
+        environment: useSandboxEnv
+          ? EnvironmentEnum.SANDBOX
+          : EnvironmentEnum.LIVE
       }
     };
 
@@ -82,10 +84,10 @@ export class Client extends AbstractService {
   }
 
   /**
-   * @returns {EnviromentEnum} enviroment
+   * @returns {EnvironmentEnum} environment
    */
-  public getEnviroment() {
-    return this.config.enviroment;
+  public getEnvironment() {
+    return this.config.environment;
   }
 
   /**
@@ -98,7 +100,7 @@ export class Client extends AbstractService {
       apiBase: useSandboxEnv
         ? BaseUrlEnum.SANDBOX_DEFAULT_API_BASE
         : BaseUrlEnum.DEFAULT_API_BASE,
-      enviroment: EnviromentEnum.LIVE
+      environment: EnvironmentEnum.LIVE
     };
   }
 
@@ -126,7 +128,7 @@ export class Client extends AbstractService {
    * @param {ConfigType} config
    */
   private validateConfig(config?: ConfigType) {
-    const { apiBase, apiKey, enviroment } = config || this.config;
+    const { apiBase, apiKey, environment } = config || this.config;
 
     this.validateApiKey(apiKey);
 
@@ -134,10 +136,12 @@ export class Client extends AbstractService {
       throw new InvalidArgumentException('apiBase must be a string');
     }
 
-    if (![EnviromentEnum.LIVE, EnviromentEnum.SANDBOX].includes(enviroment)) {
+    if (
+      ![EnvironmentEnum.LIVE, EnvironmentEnum.SANDBOX].includes(environment)
+    ) {
       throw new InvalidArgumentException(
         `Environment does not exist. Available environments: ${Object.values(
-          EnviromentEnum
+          EnvironmentEnum
         ).join(', ')}`
       );
     }
@@ -156,25 +160,28 @@ export class Client extends AbstractService {
 
   /**
    *
-   * @param {EnviromentEnum|string} enviroment
+   * @param {EnvironmentEnum|string} environment
    */
-  public setEnviroment(enviroment: EnviromentEnum | string) {
-    const config = { ...this.config, enviroment: enviroment as EnviromentEnum };
+  public setEnvironment(environment: EnvironmentEnum | string) {
+    const config = {
+      ...this.config,
+      environment: environment as EnvironmentEnum
+    };
 
     this.validateConfig(config);
     this.config = config;
-    this.setBaseUrlByEnv(this.config.enviroment);
+    this.setBaseUrlByEnv(this.config.environment);
   }
 
   /**
-   * @param {EnviromentEnum} enviroment
+   * @param {EnvironmentEnum} environment
    */
-  private setBaseUrlByEnv(enviroment: EnviromentEnum) {
+  private setBaseUrlByEnv(environment: EnvironmentEnum) {
     this.services.forEach((client) => {
-      switch (enviroment) {
-        case EnviromentEnum.SANDBOX:
+      switch (environment) {
+        case EnvironmentEnum.SANDBOX:
           return client.setBaseUrl(BaseUrlEnum.SANDBOX_DEFAULT_API_BASE);
-        case EnviromentEnum.LIVE:
+        case EnvironmentEnum.LIVE:
         default:
           return client.setBaseUrl(BaseUrlEnum.DEFAULT_API_BASE);
       }

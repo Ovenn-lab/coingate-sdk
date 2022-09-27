@@ -1,10 +1,10 @@
-export declare enum EnviromentEnum {
+export declare enum EnvironmentEnum {
     LIVE = "live",
     SANDBOX = "sandbox"
 }
 export declare type ConfigType = {
     apiKey: string | null;
-    enviroment: EnviromentEnum;
+    environment: EnvironmentEnum;
     apiBase: string;
 };
 export declare type AppInfo = {

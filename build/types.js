@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EnviromentEnum = void 0;
-var EnviromentEnum;
-(function (EnviromentEnum) {
-    EnviromentEnum["LIVE"] = "live";
-    EnviromentEnum["SANDBOX"] = "sandbox";
-})(EnviromentEnum = exports.EnviromentEnum || (exports.EnviromentEnum = {}));
+exports.EnvironmentEnum = void 0;
+var EnvironmentEnum;
+(function (EnvironmentEnum) {
+    EnvironmentEnum["LIVE"] = "live";
+    EnvironmentEnum["SANDBOX"] = "sandbox";
+})(EnvironmentEnum = exports.EnvironmentEnum || (exports.EnvironmentEnum = {}));
