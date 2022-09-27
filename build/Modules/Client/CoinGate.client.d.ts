@@ -20,6 +20,9 @@ export declare class CoinGateClient extends AbstractService {
      * @description api key for requests
      */
     private apiKey;
+    /**
+     * @description default request timeout is 30 seconds
+     */
     private timeout;
     /**
      * @description base url

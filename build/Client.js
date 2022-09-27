@@ -44,7 +44,6 @@ class Client extends _Modules_1.AbstractService {
         return this.config.enviroment;
     }
     /**
-     *
      * @param {boolean|null} useSandboxEnv
      * @returns {ConfigType} config
      */
@@ -89,7 +88,6 @@ class Client extends _Modules_1.AbstractService {
         }
     }
     /**
-     *
      * @param {string|null} apiKey
      */
     setApiKey(apiKey) {
@@ -109,7 +107,6 @@ class Client extends _Modules_1.AbstractService {
         this.setBaseUrlByEnv(this.config.enviroment);
     }
     /**
-     *
      * @param {EnviromentEnum} enviroment
      */
     setBaseUrlByEnv(enviroment) {
@@ -124,7 +121,6 @@ class Client extends _Modules_1.AbstractService {
         });
     }
     /**
-     *
      * @param {AppInfo} appInfo
      */
     setAppInfo({ name, version }) {

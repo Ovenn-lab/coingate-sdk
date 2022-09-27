@@ -29,7 +29,10 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
          * @description Coingate-sdk version
          */
         this.VERSION = '1.0.0';
-        this.timeout = 0; // Default timeout is 0
+        /**
+         * @description default request timeout is 30 seconds
+         */
+        this.timeout = 30000;
         this.baseUrl = baseUrl;
         this.client = axios_1.default.create();
         this.apiKey = null;

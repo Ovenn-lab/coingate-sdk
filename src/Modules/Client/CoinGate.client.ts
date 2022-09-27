@@ -33,7 +33,10 @@ export class CoinGateClient extends AbstractService {
    */
   private apiKey: string | null;
 
-  private timeout: number = 0; // Default timeout is 0
+  /**
+   * @description default request timeout is 30 seconds
+   */
+  private timeout: number = 30000;
 
   /**
    * @description base url

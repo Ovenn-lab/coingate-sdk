@@ -14,7 +14,6 @@ const handleErrorResponse = (error) => {
     const { response } = error;
     if (response) {
         const { status, data: { reason } } = response;
-        console.log();
         switch (status) {
             case types_1.HttpStatusEnum.BAD_REQUEST:
                 throw Api_1.BadRequest.factory(response, status);

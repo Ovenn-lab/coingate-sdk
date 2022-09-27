@@ -29,7 +29,6 @@ export const handleErrorResponse = (error: AxiosError) => {
       data: { reason }
     } = response as AxiosResponse;
 
-    console.log();
     switch (status) {
       case HttpStatusEnum.BAD_REQUEST:
         throw BadRequest.factory(response, status);
