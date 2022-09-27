@@ -1,4 +1,4 @@
-import { orderClient } from '../src/Modules';
+import { OrderService } from '../src/Modules';
 import {
   mockCheckoutData,
   mockCreateOrderData,
@@ -12,7 +12,7 @@ describe('order', () => {
   let postSpy;
 
   beforeEach(() => {
-    order = new orderClient();
+    order = new OrderService();
     getSpy = jest.spyOn(order, 'get');
     postSpy = jest.spyOn(order, 'post');
   });

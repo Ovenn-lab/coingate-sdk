@@ -1,4 +1,4 @@
-import { PublicClient } from '../src/Modules';
+import { PublicService } from '../src/Modules';
 import { CurrencyKindEnum } from '../src/Modules/Public/types';
 import {
   mockConfig,
@@ -8,19 +8,19 @@ import {
 } from './Mocks';
 
 describe('Public client', () => {
-  let publicClient;
+  let publicService;
   let getSpy;
 
   beforeEach(() => {
-    publicClient = new PublicClient();
-    getSpy = jest.spyOn(publicClient, 'get');
+    publicService = new PublicService();
+    getSpy = jest.spyOn(publicService, 'get');
   });
 
   describe('getExchangeRate method', () => {
     test('should build path and call get method', () => {
-      const buildPathSpy = jest.spyOn(publicClient, 'buildPath');
+      const buildPathSpy = jest.spyOn(publicService, 'buildPath');
 
-      const result = publicClient.getExchangeRate(mockExchangeRateData);
+      const result = publicService.getExchangeRate(mockExchangeRateData);
 
       expect(result).toBeDefined();
       expect(buildPathSpy).toBeCalledTimes(1);
@@ -37,7 +37,7 @@ describe('Public client', () => {
 
   describe('listExchangeRates method', () => {
     test('should call get with path /v2/rates/', () => {
-      const result = publicClient.listExchangeRates();
+      const result = publicService.listExchangeRates();
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -47,7 +47,7 @@ describe('Public client', () => {
 
   describe('ping method', () => {
     test('should call get with path /v2/ping/', () => {
-      const result = publicClient.ping();
+      const result = publicService.ping();
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -57,7 +57,7 @@ describe('Public client', () => {
 
   describe('ipAddresses method', () => {
     test('should call get with path /v2/ips-v4/ and pass separator param', () => {
-      const result = publicClient.ipAddresses(mockSeparator);
+      const result = publicService.ipAddresses(mockSeparator);
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -68,7 +68,7 @@ describe('Public client', () => {
     });
 
     test('should call get with path /v2/ips-v4/ and pass undefined separator param when it is not provided', () => {
-      const result = publicClient.ipAddresses();
+      const result = publicService.ipAddresses();
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -81,7 +81,7 @@ describe('Public client', () => {
 
   describe('getCurrencies methods', () => {
     test('should call get with path /v2/currencies/ and provided params', () => {
-      const result = publicClient.getCurrencies(mockGetCurrenciesData);
+      const result = publicService.getCurrencies(mockGetCurrenciesData);
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -92,7 +92,7 @@ describe('Public client', () => {
     });
 
     test('should call get with path /v2/currencies/ and undefined params when it is not provided', () => {
-      const result = publicClient.getCurrencies();
+      const result = publicService.getCurrencies();
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -105,9 +105,9 @@ describe('Public client', () => {
 
   describe('getCheckoutCurrencies method', () => {
     test('should call getCurrencies method with params for checkout currencies', () => {
-      const getCurrenciesSpy = jest.spyOn(publicClient, 'getCurrencies');
+      const getCurrenciesSpy = jest.spyOn(publicService, 'getCurrencies');
 
-      const result = publicClient.getCheckoutCurrencies();
+      const result = publicService.getCheckoutCurrencies();
 
       expect(result).toBeDefined();
       expect(getCurrenciesSpy).toBeCalledTimes(1);
@@ -121,9 +121,9 @@ describe('Public client', () => {
 
   describe('getMerchantPayCurrencies method', () => {
     test('should call getCurrencies method with params for merchant pay currencies and selected currency kind', () => {
-      const getCurrenciesSpy = jest.spyOn(publicClient, 'getCurrencies');
+      const getCurrenciesSpy = jest.spyOn(publicService, 'getCurrencies');
 
-      const result = publicClient.getMerchantPayCurrencies(
+      const result = publicService.getMerchantPayCurrencies(
         CurrencyKindEnum.FIAT
       );
 
@@ -137,9 +137,9 @@ describe('Public client', () => {
     });
 
     test('should call getCurrencies method with params for merchant pay currencies', () => {
-      const getCurrenciesSpy = jest.spyOn(publicClient, 'getCurrencies');
+      const getCurrenciesSpy = jest.spyOn(publicService, 'getCurrencies');
 
-      const result = publicClient.getMerchantPayCurrencies();
+      const result = publicService.getMerchantPayCurrencies();
 
       expect(result).toBeDefined();
       expect(getCurrenciesSpy).toBeCalledTimes(1);
@@ -153,9 +153,9 @@ describe('Public client', () => {
 
   describe('getMerchantPayoutCurrencies method', () => {
     test('should call getCurrencies method with params for checkout currencies and selected currency kind', () => {
-      const getCurrenciesSpy = jest.spyOn(publicClient, 'getCurrencies');
+      const getCurrenciesSpy = jest.spyOn(publicService, 'getCurrencies');
 
-      const result = publicClient.getMerchantPayoutCurrencies(
+      const result = publicService.getMerchantPayoutCurrencies(
         CurrencyKindEnum.CRYPTO
       );
 
@@ -170,9 +170,9 @@ describe('Public client', () => {
     });
 
     test('should call getCurrencies method with params for checkout currencies', () => {
-      const getCurrenciesSpy = jest.spyOn(publicClient, 'getCurrencies');
+      const getCurrenciesSpy = jest.spyOn(publicService, 'getCurrencies');
 
-      const result = publicClient.getMerchantPayoutCurrencies();
+      const result = publicService.getMerchantPayoutCurrencies();
 
       expect(result).toBeDefined();
       expect(getCurrenciesSpy).toBeCalledTimes(1);
@@ -187,7 +187,7 @@ describe('Public client', () => {
 
   describe('getPlatforms method', () => {
     test('should call get with path /v2/currencies/ and provided params', () => {
-      const result = publicClient.getPlatforms(true);
+      const result = publicService.getPlatforms(true);
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
@@ -200,7 +200,7 @@ describe('Public client', () => {
 
   describe('test method', () => {
     test('should call get with path /v2/auth/test and provided apiKey', () => {
-      const result = publicClient.test(mockConfig.apiKey);
+      const result = publicService.test(mockConfig.apiKey);
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
