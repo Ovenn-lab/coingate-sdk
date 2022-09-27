@@ -115,7 +115,7 @@ export class Client extends AbstractService {
   /**
    * Tests api connection
    * @param {string} apiKey
-   * @returns {boolean} true / false
+   * @returns {boolean} boolean
    */
   public testConnection(apiKey: string) {
     return this.public.test(apiKey);
