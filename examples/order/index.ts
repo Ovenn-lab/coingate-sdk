@@ -6,7 +6,7 @@ const client = new Client(apiKey, true); // When second parameter is true, you'l
 
 const createOrder = async () => {
   try {
-    const { id } = await client.paymentGateway.createOrder({
+    const { id } = await client.order.createOrder({
       price_amount: 1,
       price_currency: 'USD',
       receive_currency: 'ETH',
@@ -21,7 +21,7 @@ const createOrder = async () => {
 
 const checkout = async (orderId: number) => {
   try {
-    const checkout = await client.paymentGateway.checkout(orderId, {
+    const checkout = await client.order.checkout(orderId, {
       pay_currency: 'ETH'
     });
   } catch (e) {
@@ -31,7 +31,7 @@ const checkout = async (orderId: number) => {
 
 const trackStatus = async (orderId: number) => {
   const interval = setInterval(async () => {
-    const { status } = await client.paymentGateway.getOrder(orderId);
+    const { status } = await client.order.getOrder(orderId);
 
     if (
       ['expired', 'invalid', 'paid', 'canceled', 'refunded'].includes(status)

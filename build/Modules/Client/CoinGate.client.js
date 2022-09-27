@@ -17,24 +17,50 @@ const axios_1 = __importDefault(require("axios"));
 const Abstract_service_1 = require("../../Modules/AbstractService/Abstract.service");
 const Exception_1 = require("../../Exception");
 const types_1 = require("./types");
+/**
+ * Class representing a CoinGate client
+ * @extends AbstractService
+ */
 class CoinGateClient extends Abstract_service_1.AbstractService {
+    /** @constructor */
     constructor(baseUrl) {
         super();
+        /**
+         * @description Coingate-sdk version
+         */
         this.VERSION = '1.0.0';
         this.baseUrl = baseUrl;
         this.client = axios_1.default.create();
         this.apiKey = null;
     }
+    /**
+     *
+     * @param {string|null} apiKey
+     */
     setApiKey(apiKey) {
         this.validateApiKey(apiKey);
         this.apiKey = apiKey;
     }
+    /**
+     *
+     * @param {BaseUrlEnum} baseUrl
+     */
     setBaseUrl(baseUrl) {
         this.baseUrl = baseUrl;
     }
+    /**
+     *
+     * @param {AppInfo} appInfo
+     */
     setAppInfo({ name, version }) {
         this.appInfo = { name, version };
     }
+    /**
+     *
+     * @param {string} path
+     * @param {CreateOrderRefundBody|CreateOrderBody|CheckoutBody} body
+     * @returns {Promise}
+     */
     post(path, body) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -48,6 +74,11 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
             }
         });
     }
+    /**
+     *
+     * @param {GetRequestType} params
+     * @returns {Promise}
+     */
     get({ path, params, apiKey }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -62,6 +93,12 @@ class CoinGateClient extends Abstract_service_1.AbstractService {
             }
         });
     }
+    /**
+     *
+     * @param {RequestTypeEnum} requestType
+     * @param {string} apiKey
+     * @returns headers
+     */
     getDefaultHeaders(requestType, apiKey) {
         let headers;
         // if (requestType === RequestTypeEnum.POST) {

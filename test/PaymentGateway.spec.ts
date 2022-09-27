@@ -1,4 +1,4 @@
-import { PaymentGatewayClient } from '../src/Modules';
+import { orderClient } from '../src/Modules';
 import {
   mockCheckoutData,
   mockCreateOrderData,
@@ -6,20 +6,20 @@ import {
   mockOrderId
 } from './Mocks';
 
-describe('PaymentGateway', () => {
-  let paymentGateway;
+describe('order', () => {
+  let order;
   let getSpy;
   let postSpy;
 
   beforeEach(() => {
-    paymentGateway = new PaymentGatewayClient();
-    getSpy = jest.spyOn(paymentGateway, 'get');
-    postSpy = jest.spyOn(paymentGateway, 'post');
+    order = new orderClient();
+    getSpy = jest.spyOn(order, 'get');
+    postSpy = jest.spyOn(order, 'post');
   });
 
   describe('createOrder method', () => {
     test('should call post method with provided data', () => {
-      const result = paymentGateway.createOrder(mockCreateOrderData);
+      const result = order.createOrder(mockCreateOrderData);
 
       expect(result).toBeDefined();
       expect(postSpy).toBeCalledTimes(1);
@@ -29,8 +29,8 @@ describe('PaymentGateway', () => {
 
   describe('checkout method', () => {
     test('should call post method with provided data', () => {
-      const buildPathSpy = jest.spyOn(paymentGateway, 'buildPath');
-      const result = paymentGateway.checkout(mockOrderId, mockCheckoutData);
+      const buildPathSpy = jest.spyOn(order, 'buildPath');
+      const result = order.checkout(mockOrderId, mockCheckoutData);
 
       expect(result).toBeDefined();
       expect(buildPathSpy).toBeCalledTimes(1);
@@ -48,8 +48,8 @@ describe('PaymentGateway', () => {
 
   describe('getOrder method', () => {
     test('should call get method with provided order id', () => {
-      const buildPathSpy = jest.spyOn(paymentGateway, 'buildPath');
-      const result = paymentGateway.getOrder(mockOrderId);
+      const buildPathSpy = jest.spyOn(order, 'buildPath');
+      const result = order.getOrder(mockOrderId);
 
       expect(result).toBeDefined();
       expect(buildPathSpy).toBeCalledTimes(1);
@@ -64,7 +64,7 @@ describe('PaymentGateway', () => {
 
   describe('listOrders method', () => {
     test('should call get method with provided query params', () => {
-      const result = paymentGateway.listOrders(mockListOrdersParams);
+      const result = order.listOrders(mockListOrdersParams);
 
       expect(result).toBeDefined();
       expect(getSpy).toBeCalledTimes(1);
