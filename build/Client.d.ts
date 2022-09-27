@@ -58,7 +58,7 @@ export declare class Client extends AbstractService {
     /**
      * Tests api connection
      * @param {string} apiKey
-     * @returns {boolean} true / false
+     * @returns {boolean} boolean
      */
     testConnection(apiKey: string): Promise<boolean>;
     /**

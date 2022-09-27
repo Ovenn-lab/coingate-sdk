@@ -68,7 +68,7 @@ class Client extends _Modules_1.AbstractService {
     /**
      * Tests api connection
      * @param {string} apiKey
-     * @returns {boolean} true / false
+     * @returns {boolean} boolean
      */
     testConnection(apiKey) {
         return this.public.test(apiKey);
