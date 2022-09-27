@@ -1,6 +1,6 @@
 import { Client } from '../src/Client';
 
-import { mockConfig, mockWrongApiKeys, mockWrongEnviroment } from './Mocks';
+import { mockConfig, mockWrongApiKeys, mockWrongEnvironment } from './Mocks';
 
 describe('Client', () => {
   let client: Client;
@@ -46,18 +46,18 @@ describe('Client', () => {
     });
   });
 
-  describe('setEnviroment method', () => {
+  describe('setEnvironment method', () => {
     beforeEach(() => {
       client = new Client(null, true);
       validateConfigSpy = jest.spyOn(client, 'validateConfig');
     });
 
-    test('should set new enviroment if everything is ok', () => {
+    test('should set new environment if everything is ok', () => {
       const setBaseUrlByEnvSpy = jest
         .spyOn(client, 'setBaseUrlByEnv')
         .mockReturnValue(undefined);
 
-      const result = client.setEnviroment(mockConfig.enviroment);
+      const result = client.setEnvironment(mockConfig.environment);
 
       expect(result).toBe(undefined);
       expect(validateConfigSpy).toHaveBeenCalledTimes(1);
@@ -66,11 +66,11 @@ describe('Client', () => {
         apiKey: null
       });
       expect(setBaseUrlByEnvSpy).toHaveBeenCalledTimes(1);
-      expect(setBaseUrlByEnvSpy).toHaveBeenCalledWith(mockConfig.enviroment);
+      expect(setBaseUrlByEnvSpy).toHaveBeenCalledWith(mockConfig.environment);
     });
 
-    test('should throw error if enviroment is not: live, sandbox', () => {
-      const result = () => client.setEnviroment(mockWrongEnviroment);
+    test('should throw error if environment is not: live, sandbox', () => {
+      const result = () => client.setEnvironment(mockWrongEnvironment);
 
       expect(result).toThrow(
         'Environment does not exist. Available environments: live, sandbox'
@@ -79,7 +79,7 @@ describe('Client', () => {
       expect(validateConfigSpy).toHaveBeenCalledWith({
         ...mockConfig,
         apiKey: null,
-        enviroment: mockWrongEnviroment
+        environment: mockWrongEnvironment
       });
     });
   });
@@ -96,15 +96,15 @@ describe('Client', () => {
     });
   });
 
-  describe('getEnviroment method', () => {
+  describe('getEnvironment method', () => {
     beforeAll(() => {
       client = new Client(null, true);
     });
 
-    test('should return current enviroment', () => {
-      const result = client.getEnviroment();
+    test('should return current environment', () => {
+      const result = client.getEnvironment();
 
-      expect(result).toBe(mockConfig.enviroment);
+      expect(result).toBe(mockConfig.environment);
     });
   });
 });

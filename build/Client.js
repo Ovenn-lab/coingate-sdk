@@ -17,7 +17,9 @@ class Client extends _Modules_1.AbstractService {
         this.useSandboxEnv = useSandboxEnv;
         this.config = Object.assign(Object.assign({}, this.getDefaultConfig(useSandboxEnv)), {
             apiKey: apiKey || null,
-            enviroment: useSandboxEnv ? types_2.EnviromentEnum.SANDBOX : types_2.EnviromentEnum.LIVE
+            environment: useSandboxEnv
+                ? types_2.EnvironmentEnum.SANDBOX
+                : types_2.EnvironmentEnum.LIVE
         });
         this.validateConfig();
         const { apiBase } = this.config;
@@ -38,10 +40,10 @@ class Client extends _Modules_1.AbstractService {
         return this.config.apiKey;
     }
     /**
-     * @returns {EnviromentEnum} enviroment
+     * @returns {EnvironmentEnum} environment
      */
-    getEnviroment() {
-        return this.config.enviroment;
+    getEnvironment() {
+        return this.config.environment;
     }
     /**
      * @param {boolean|null} useSandboxEnv
@@ -53,7 +55,7 @@ class Client extends _Modules_1.AbstractService {
             apiBase: useSandboxEnv
                 ? types_1.BaseUrlEnum.SANDBOX_DEFAULT_API_BASE
                 : types_1.BaseUrlEnum.DEFAULT_API_BASE,
-            enviroment: types_2.EnviromentEnum.LIVE
+            environment: types_2.EnvironmentEnum.LIVE
         };
     }
     /**
@@ -78,13 +80,13 @@ class Client extends _Modules_1.AbstractService {
      * @param {ConfigType} config
      */
     validateConfig(config) {
-        const { apiBase, apiKey, enviroment } = config || this.config;
+        const { apiBase, apiKey, environment } = config || this.config;
         this.validateApiKey(apiKey);
         if (typeof apiBase !== 'string') {
             throw new _Exception_1.InvalidArgumentException('apiBase must be a string');
         }
-        if (![types_2.EnviromentEnum.LIVE, types_2.EnviromentEnum.SANDBOX].includes(enviroment)) {
-            throw new _Exception_1.InvalidArgumentException(`Environment does not exist. Available environments: ${Object.values(types_2.EnviromentEnum).join(', ')}`);
+        if (![types_2.EnvironmentEnum.LIVE, types_2.EnvironmentEnum.SANDBOX].includes(environment)) {
+            throw new _Exception_1.InvalidArgumentException(`Environment does not exist. Available environments: ${Object.values(types_2.EnvironmentEnum).join(', ')}`);
         }
     }
     /**
@@ -98,23 +100,23 @@ class Client extends _Modules_1.AbstractService {
     }
     /**
      *
-     * @param {EnviromentEnum|string} enviroment
+     * @param {EnvironmentEnum|string} environment
      */
-    setEnviroment(enviroment) {
-        const config = Object.assign(Object.assign({}, this.config), { enviroment: enviroment });
+    setEnvironment(environment) {
+        const config = Object.assign(Object.assign({}, this.config), { environment: environment });
         this.validateConfig(config);
         this.config = config;
-        this.setBaseUrlByEnv(this.config.enviroment);
+        this.setBaseUrlByEnv(this.config.environment);
     }
     /**
-     * @param {EnviromentEnum} enviroment
+     * @param {EnvironmentEnum} environment
      */
-    setBaseUrlByEnv(enviroment) {
+    setBaseUrlByEnv(environment) {
         this.services.forEach((client) => {
-            switch (enviroment) {
-                case types_2.EnviromentEnum.SANDBOX:
+            switch (environment) {
+                case types_2.EnvironmentEnum.SANDBOX:
                     return client.setBaseUrl(types_1.BaseUrlEnum.SANDBOX_DEFAULT_API_BASE);
-                case types_2.EnviromentEnum.LIVE:
+                case types_2.EnvironmentEnum.LIVE:
                 default:
                     return client.setBaseUrl(types_1.BaseUrlEnum.DEFAULT_API_BASE);
             }

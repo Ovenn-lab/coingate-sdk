@@ -1,11 +1,11 @@
-export enum EnviromentEnum {
+export enum EnvironmentEnum {
   LIVE = 'live',
   SANDBOX = 'sandbox'
 }
 
 export type ConfigType = {
   apiKey: string | null;
-  enviroment: EnviromentEnum;
+  environment: EnvironmentEnum;
   apiBase: string;
 };
 
