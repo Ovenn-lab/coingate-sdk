@@ -36,7 +36,7 @@ client.setApiKey('YOUR_API_TOKEN');
 client.setEnvironment('sandbox');
 ```
 
-### Payment Gateway API
+### Order
 
 #### Create order
 
@@ -58,7 +58,7 @@ const data = {
 };
 
 try {
-  const order = await client.paymentGateway.createOrder(data);
+  const order = await client.order.createOrder(data);
 } catch (error) {
   // Oops... Something went wrong...
   console.error(error);
@@ -78,7 +78,7 @@ const data = {
 };
 
 try {
-  const checkout = await client.paymentGateway.checkout(1234, data);
+  const checkout = await client.order.checkout(1234, data);
 } catch (error) {
   // Oops... Something went wrong...
   console.error(error);
@@ -91,7 +91,7 @@ After creating an order, you will get an ORDER ID. This ID will be used for GET 
 
 ```ts
 try {
-  const order = await client.paymentGateway.getOrder(1234); // order id
+  const order = await client.order.getOrder(1234); // order id
 } catch (error) {
   // Oops... Something went wrong...
   console.error(error);
@@ -112,7 +112,7 @@ const data = {
 }; // all parameters are optional
 
 try {
-  const orders = await client.paymentGateway.listOrders(data); // data is optional
+  const orders = await client.order.listOrders(data); // data is optional
 } catch (error) {
   // Oops... Something went wrong...
   console.error(error);
@@ -171,7 +171,10 @@ const refund = await client.refunds.getRefunds();
 Current exchange rate for any two currencies, fiat or crypto. This endpoint is public, authentication is not required.
 
 ```ts
-const exchangeRate = await client.public.getExchangeRate('GBP', 'USD');
+const exchangeRate = await client.public.getExchangeRate({
+  from: 'GBP',
+  to: 'USD'
+});
 ```
 
 #### List Exchange Rates

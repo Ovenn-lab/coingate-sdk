@@ -5,7 +5,12 @@ const _Modules_1 = require("./Modules");
 const _Exception_1 = require("./Exception");
 const types_1 = require("./Modules/Client/types");
 const types_2 = require("./types");
+/**
+ * Class representing a Client
+ * @extends AbstractService
+ */
 class Client extends _Modules_1.AbstractService {
+    /** @constructor */
     constructor(apiKey, useSandboxEnv) {
         super();
         this.apiKey = apiKey;
@@ -17,18 +22,32 @@ class Client extends _Modules_1.AbstractService {
         this.validateConfig();
         const { apiBase } = this.config;
         this.prepareModules(apiBase);
-        this.clients = [this.public, this.paymentGateway, this.refunds];
+        this.services = [this.public, this.order, this.refunds];
         this.setApiKey(this.config.apiKey);
     }
+    /**
+     * @returns {AppInfo|null} app information
+     */
     getAppInfo() {
         return this.appInfo;
     }
+    /**
+     * @returns {string|null} api key or null
+     */
     getApiKey() {
         return this.config.apiKey;
     }
+    /**
+     * @returns {EnviromentEnum} enviroment
+     */
     getEnviroment() {
         return this.config.enviroment;
     }
+    /**
+     *
+     * @param {boolean|null} useSandboxEnv
+     * @returns {ConfigType} config
+     */
     getDefaultConfig(useSandboxEnv) {
         return {
             apiKey: null,
@@ -38,14 +57,27 @@ class Client extends _Modules_1.AbstractService {
             enviroment: types_2.EnviromentEnum.LIVE
         };
     }
+    /**
+     * Prepares all modules
+     * @param {string} apiBase
+     */
     prepareModules(apiBase) {
-        this.public = new _Modules_1.PublicClient(apiBase);
-        this.refunds = new _Modules_1.RefundsClient(apiBase);
-        this.paymentGateway = new _Modules_1.PaymentGatewayClient(apiBase);
+        this.public = new _Modules_1.PublicService(apiBase);
+        this.refunds = new _Modules_1.RefundsService(apiBase);
+        this.order = new _Modules_1.OrderService(apiBase);
     }
+    /**
+     * Tests api connection
+     * @param {string} apiKey
+     * @returns {boolean} true / false
+     */
     testConnection(apiKey) {
         return this.public.test(apiKey);
     }
+    /**
+     * Config validator
+     * @param {ConfigType} config
+     */
     validateConfig(config) {
         const { apiBase, apiKey, enviroment } = config || this.config;
         this.validateApiKey(apiKey);
@@ -56,20 +88,32 @@ class Client extends _Modules_1.AbstractService {
             throw new _Exception_1.InvalidArgumentException(`Environment does not exist. Available environments: ${Object.values(types_2.EnviromentEnum).join(', ')}`);
         }
     }
+    /**
+     *
+     * @param {string|null} apiKey
+     */
     setApiKey(apiKey) {
         const config = Object.assign(Object.assign({}, this.config), { apiKey });
         this.validateConfig(config);
         this.config = config;
-        this.clients.forEach((client) => client.setApiKey(this.config.apiKey));
+        this.services.forEach((client) => client.setApiKey(this.config.apiKey));
     }
+    /**
+     *
+     * @param {EnviromentEnum|string} enviroment
+     */
     setEnviroment(enviroment) {
         const config = Object.assign(Object.assign({}, this.config), { enviroment: enviroment });
         this.validateConfig(config);
         this.config = config;
         this.setBaseUrlByEnv(this.config.enviroment);
     }
+    /**
+     *
+     * @param {EnviromentEnum} enviroment
+     */
     setBaseUrlByEnv(enviroment) {
-        this.clients.forEach((client) => {
+        this.services.forEach((client) => {
             switch (enviroment) {
                 case types_2.EnviromentEnum.SANDBOX:
                     return client.setBaseUrl(types_1.BaseUrlEnum.SANDBOX_DEFAULT_API_BASE);
@@ -79,16 +123,20 @@ class Client extends _Modules_1.AbstractService {
             }
         });
     }
+    /**
+     *
+     * @param {AppInfo} appInfo
+     */
     setAppInfo({ name, version }) {
         this.appInfo = { name: name.trim(), version: version === null || version === void 0 ? void 0 : version.trim() };
-        this.clients.forEach((client) => client.setAppInfo({ name, version }));
+        this.services.forEach((client) => client.setAppInfo({ name, version }));
     }
     /**
      * Set request timeout
      * @param {number} timeout
      */
     setRequestTimeout(timeout) {
-        this.clients.forEach((client) => client.setRequestTimeout(timeout));
+        this.services.forEach((client) => client.setRequestTimeout(timeout));
     }
 }
 exports.Client = Client;
